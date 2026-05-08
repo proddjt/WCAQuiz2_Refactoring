@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://wcaquiz.xyz
+
+# Sitemaps
+Sitemap: https://wcaquiz.xyz/sitemap.xml

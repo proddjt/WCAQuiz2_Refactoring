@@ -1,0 +1,1 @@
+export const safe = (prom: Promise<unknown>) => prom.then((res) => [null, res]).catch((err) => [err]);
