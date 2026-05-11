@@ -13,6 +13,7 @@ import {
     LocaleModule,
     CellStyleModule
 } from 'ag-grid-community';
+import { Notifications } from "@mantine/notifications";
 
 ModuleRegistry.registerModules([
     ClientSideRowModelModule,
@@ -31,6 +32,10 @@ export default function Providers({children} : {children: React.ReactNode}) {
                     closeOnClickOutside: false,
                     closeOnEscape: false,
                 }}>
+                <Notifications 
+                position="bottom-center"
+                autoClose={3500}
+                />
                     <ScreenProvider>
                         {children}
                     </ScreenProvider>

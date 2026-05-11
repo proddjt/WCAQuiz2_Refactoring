@@ -118,3 +118,19 @@
 .timer-blinking {
   animation: timer-blink 1s ease-in-out infinite;
 }
+
+@keyframes yellowBlink {
+  0% {
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
+  }
+}
+
+.new-clue {
+  animation: yellowBlink 2.5s ease-in-out 2;
+}

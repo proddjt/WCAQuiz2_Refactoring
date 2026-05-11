@@ -12,39 +12,44 @@ import { FaSearch } from "react-icons/fa";
 import { IoIosStopwatch, IoMdPodium } from "react-icons/io";
 import { RiContactsFill } from "react-icons/ri";
 import useFocus from "./hooks/useFocus";
+import { useEffect } from "react";
+import useDialog from "@/components/layout/hooks/useDialog";
+import FloatingActions from "@/components/layout/FloatingActions";
+import { showAlert } from "@/utils/notifications";
 
 export default function Quiz({mode} : {mode: string}){
     const {attempts, gameOver, isPending, person, isTimeOver, timer, checkAnswer, startNew, revealAnswer, setAttempts, imageFilters} = useFocus(mode)
-    const {imgModal, confirmationModal} = useModals();
+    const {imgModal, confirmationModal, focusModal} = useModals();
     const {term, setTerm, isSearching, results} = useSearch(mode);
     const { t } = useTranslation();
-    const {cols} = useTable("focus", attempts < 4)
+    const {cols} = useTable("focus", attempts < 3 && !gameOver)
+    const {toggle, ConnectionDialog, opened} = useDialog();
 
-    if (isPending) return <MyLoader />
+    useEffect(() => {
+        if (!isPending || opened) return;
+
+        const timeoutId = setTimeout(() => {
+            toggle();
+        }, 5000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [isPending, toggle, opened]);
+
+    if (isPending) return <MyLoader Dialog={ConnectionDialog}/>
 
     return (
-        <Stack flex={1} hiddenFrom="md" p={"xl"} align="center" gap={30}>
-            <Stack
-            w={"100%"}
-            gap={10}
-            style={{
-                position: "sticky",
-                top: 15,
-                zIndex: 1,
-                backdropFilter: "blur(10px)",
-                background: "rgba(20, 20, 20, 0.55)",
-                borderRadius: 12,
-                padding: "12px 16px",
-                border: "1px solid rgba(255,255,255,0.05)",
-            }}>
+        <Stack flex={1} hiddenFrom="md" px={"xl"} pb={"md"} pt={0} align="center" gap={30}>
+            <FloatingActions openInfo={focusModal}>
                 <Group justify="space-between" align="center" gap={50} w={"100%"}>
                     <Group justify="start" align="center" gap={5}>
                         <Text fw={600} fz={"1.5rem"}>{t("score")}:</Text>
-                        <Text fw={600} fz={"1.5rem"} c={attempts < 3 ? "green" : attempts < 5 ? "yellow" : "red"}>{6 - attempts}</Text>
+                        <Text fw={600} fz={"1.5rem"} c={attempts < 2 ? "green" : attempts < 4 ? "yellow" : "red"}>{5 - attempts}</Text>
                     </Group>
                     <Group justify="start" align="center" gap={5}>
                         <Text fw={600} fz={"1.5rem"} >{t("time")}: </Text>
-                        <Text fw={600} fz={"1.5rem"} c={isTimeOver ? "red" : "white"} className={timer <= 10 && timer != 0 ? "timer-blinking" : undefined}>{formatSecondsTime(timer)}</Text>
+                        <Text fw={600} fz={"1.5rem"} c={isTimeOver ? "red" : "white"} className={timer <= 10 && timer != 0 && !gameOver? "timer-blinking" : undefined}>{formatSecondsTime(timer)}</Text>
                     </Group>
                     
                 </Group>
@@ -66,7 +71,7 @@ export default function Quiz({mode} : {mode: string}){
                     checkAnswer(v);
                 }}
                 renderOption={(i) => 
-                <Group gap={5}>
+                    <Group gap={5}>
                     <Text size="sm" fw={500}>
                     {i.option.label}
                     </Text>
@@ -78,10 +83,17 @@ export default function Quiz({mode} : {mode: string}){
                 }
                 />
 
-                <Button fullWidth disabled={gameOver} variant="light" onClick={() => confirmationModal(t("skip_answ_modal_desc"), () => setAttempts(prev => prev + 1))}>{t("skip")}</Button>
+                <Button
+                fullWidth
+                disabled={gameOver}
+                variant="light"
+                onClick={() => confirmationModal(t("skip_answ_modal_desc"), () => {setAttempts(prev => prev + 1); showAlert(t("skip_alert_desc"), t("skip_alert_heading"))})}
+                >
+                    {t("skip")}
+                </Button>
                 <Button fullWidth disabled={gameOver} variant="outline" onClick={() => confirmationModal(t("reveal_answ_modal_desc"), revealAnswer)}>{t("reveal")}</Button>
                 <Button fullWidth disabled={!gameOver} onClick={() => confirmationModal(t("start_new_modal_desc"), startNew)}>{t("start_new")}</Button>
-            </Stack>
+            </FloatingActions>
 
             <Image
             src={person?.avatarUrl}
@@ -90,57 +102,61 @@ export default function Quiz({mode} : {mode: string}){
             fit={"contain"}
             onClick={() => imgModal(person?.avatarUrl || "", imageFilters)}
             bdrs={"md"}
-            key={attempts || +gameOver}
+            key={`${attempts}-IMAGE` || +gameOver}
             style={gameOver ? undefined : imageFilters}
             />
 
-            <Title order={1} mt={20} ta={"center"}>{attempts === 6 || gameOver ? person?.name : "*****************"}</Title>
+            <Title order={1} mt={20} ta={"center"}>{attempts === 5 || gameOver ? person?.name : "*****************"}</Title>
 
-            <Card title={t("personal_info")} Icon={RiContactsFill}>
+            <Card
+            title={t("personal_info")}
+            Icon={RiContactsFill}
+            key={attempts === 1 || attempts === 4 ? `${attempts}-PERSONAL` : "static"}
+            animation={attempts === 1 || attempts === 4 ? "new-clue" : ""}>
                 <Group>
                     <TextInput
                     label={t("nation")}
                     value={person?.country_name}
                     readOnly
                     flex={1}
-                    rightSection={mode != "IT" && attempts < 2 ? null : <ReactCountryFlag countryCode={person?.country || ""} svg/>}
-                    type={mode != "IT" && attempts < 2 && !gameOver ? "password" : undefined}
+                    rightSection={mode != "IT" && attempts < 1 ? null : <ReactCountryFlag countryCode={person?.country || ""} svg/>}
+                    type={mode != "IT" && attempts < 1 && !gameOver ? "password" : undefined}
                     />
                     <TextInput
                     label="WCA ID"
-                    value={attempts === 5 ? `${person?.id.slice(0,4)}••••••` : person?.id}
+                    value={attempts === 4 ? `${person?.id.slice(0,4)}••••••` : person?.id}
                     readOnly
                     flex={1}
-                    type={attempts < 5 && !gameOver ? "password" : undefined}
+                    type={attempts < 4 && !gameOver ? "password" : undefined}
                     />
                     <TextInput
                     label={t("gender")}
                     value={t(person?.gender || "")}
                     readOnly
                     flex={1}
-                    type={attempts < 2 && !gameOver ? "password" : undefined}
+                    type={attempts < 1 && !gameOver ? "password" : undefined}
                     />
                 </Group>
             </Card>
-            <Card title={t("comp_info")} Icon={IoMdPodium}>
+            <Card title={t("comp_info")} Icon={IoMdPodium} animation={attempts === 2 ? "new-clue" : ""}>
                 <Group>
                     <TextInput
                     label={t("comp_numb")}
                     value={person?.numberOfCompetitions}
                     readOnly
                     flex={1}
-                    type={attempts < 3 && !gameOver ? "password" : undefined}
+                    type={attempts < 2 && !gameOver ? "password" : undefined}
                     />
                 </Group>
             </Card>
-            <Card title={t("best_result")} Icon={IoIosStopwatch} h={"200px"}>
+            <Card title={t("best_result")} Icon={IoIosStopwatch} h={"200px"} animation={attempts === 3 ? "new-clue" : ""}>
                 <Table
                 columns={cols}
                 rows={person?.personal_records || []}
                 isLoading={false}
                 />
             </Card>
-            
+
         </Stack>
     )
 }

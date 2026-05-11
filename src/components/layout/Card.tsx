@@ -6,11 +6,12 @@ interface Props {
     children: React.ReactNode,
     Icon: IconType
     h?: string | number
+    animation?: string
 }
 
-export default function Card({title, children, Icon, h} : Props){
+export default function Card({title, children, Icon, h, animation} : Props){
     return (
-        <Paper withBorder p={"md"} w={"100%"} h={h}>
+        <Paper withBorder p={"md"} w={"100%"} h={h} className={animation}>
             <Stack gap={10} h={h ? "100%" : undefined}>
                 <Group justify="space-between">
                     <Text fw={600} fz={"xl"}>{title}</Text>

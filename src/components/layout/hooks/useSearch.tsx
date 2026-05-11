@@ -16,7 +16,7 @@ export default function useSearch(mode: string){
             const data = await fetchSearchBar(value, mode);
             setResults(data);
         })
-    }, 500);
+    }, 300);
 
     useEffect(() => {
         search(term);

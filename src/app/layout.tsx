@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./animations.css"
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import Providers from "@/components/layout/Providers";
 import Particles from "@/components/react-bits/Particles";
 import { Box } from "@mantine/core";

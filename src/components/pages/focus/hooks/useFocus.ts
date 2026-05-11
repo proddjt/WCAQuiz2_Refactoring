@@ -2,6 +2,7 @@ import useModals from "@/components/layout/hooks/useModals";
 import useTimer from "@/components/layout/hooks/useTimer";
 import { FocusPerson, getPerson } from "@/data/focus";
 import { getImageStyle } from "@/utils/functions";
+import { showError } from "@/utils/notifications";
 import { useEffect, useEffectEvent, useMemo, useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +21,7 @@ export default function useFocus(mode: string){
 
     const revealAnswer = () => {
         if (gameOver) return
-        setAttempts(6);
+        setAttempts(5);
         setGameOver(true);
         stop();
         endModal(t("lose_modal_title"), t("lose_modal_desc", {person: person?.name}));
@@ -49,9 +50,10 @@ export default function useFocus(mode: string){
         if (answer === person?.id) {
             setGameOver(true);
             stop();
-            endModal(t("win_modal_title"), t("win_modal_desc", {person: person?.name, points: 6 - attempts}));
+            endModal(t("win_modal_title"), t("win_modal_desc", {person: person?.name, points: 5 - attempts}));
         } else {
             setAttempts(attempts + 1);
+            showError(t("wrong_alert_desc"), t("wrong_alert_heading"))
         }
     }
     
@@ -64,7 +66,7 @@ export default function useFocus(mode: string){
     const stopGame = useEffectEvent(() => setTimeout(() => revealAnswer(), 10));
 
     useEffect(() => {
-        if (isTimeOver || attempts === 6) {
+        if (isTimeOver || attempts === 5) {
             stopGame();
         }
     }, [attempts, isTimeOver])
