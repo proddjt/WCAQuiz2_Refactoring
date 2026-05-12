@@ -5,10 +5,10 @@ import EventCell from "../table/EventCell";
 import { CustomCellRendererProps } from "ag-grid-react";
 import { formatTime } from "@/utils/functions";
 
-export default function useTable(mode: "focus" | "goldrush" | "reveal" | "versus", condition: boolean) {
+export default function useTable(mode: "focus" | "goldrush" | "reveal" | "versus" | "medals" | "records" | "results", condition?: boolean, mulitpleConditions?: boolean[]) {
     const { t } = useTranslation();
 
-    const isCensored = useMemo(() => condition ? "table-censored" : undefined, [condition]);
+    const isCensored = useMemo(() => condition ? "text-censored" : undefined, [condition]);
 
     const colDefs = useMemo(() => ({
         focus: [
@@ -27,8 +27,29 @@ export default function useTable(mode: "focus" | "goldrush" | "reveal" | "versus
         ],
         versus: [
 
+        ],
+        medals: [
+            { headerName: t("gold"), field: "gold", flex: 1, cellClass: isCensored },
+            { headerName: t("silver"), field: "silver", flex: 1, cellClass: isCensored },
+            { headerName: t("bronze"), field: "bronze", flex: 1, cellClass: isCensored },
+        ],
+        records: [
+            { headerName: t("world"), field: "world", flex: 1, cellClass: isCensored },
+            { headerName: t("continental"), field: "continental", flex: 1, cellClass: isCensored },
+            { headerName: t("national"), field: "national", flex: 1, cellClass: isCensored },
+        ],
+        results: [
+            { headerName: t("event"), field: "event_name", maxWidth: 200, cellRenderer: (params: CustomCellRendererProps) => <EventCell params={params} isCensored={mulitpleConditions?.[0] ? "text-censored" : undefined} /> },
+            { headerName: "NR", field: "single.country_rank", maxWidth: 75, cellClass: mulitpleConditions?.[2] ? "text-censored" : undefined, valueFormatter: params => params.value || "-" },
+            { headerName: "CR", field: "single.continent_rank", maxWidth: 75, cellClass: mulitpleConditions?.[2] ? "text-censored" : undefined, valueFormatter: params => params.value || "-" },
+            { headerName: "WR", field: "single.world_rank", maxWidth: 75, cellClass: mulitpleConditions?.[2] ? "text-censored" : undefined, valueFormatter: params => params.value || "-" },
+            { headerName: t("single"), field: "single.best", minWidth: 75, cellClass: mulitpleConditions?.[2] ? "text-censored" : undefined, valueFormatter: params => formatTime(params.value, params.data.event_id) },
+            { headerName: t("average"), field: "average.best", minWidth: 75, cellClass: mulitpleConditions?.[1] ? "text-censored" : undefined, valueFormatter: params => formatTime(params.value, params.data.event_id) },
+            { headerName: "WR", field: "average.world_rank", maxWidth: 75, cellClass: mulitpleConditions?.[1] ? "text-censored" : undefined, valueFormatter: params => params.value || "-" },
+            { headerName: "CR", field: "average.continent_rank", maxWidth: 75, cellClass: mulitpleConditions?.[1] ? "text-censored" : undefined, valueFormatter: params => params.value || "-" },
+            { headerName: "NR", field: "average.country_rank", maxWidth: 75, cellClass: mulitpleConditions?.[1] ? "text-censored" : undefined, valueFormatter: params => params.value || "-" },
         ]
-    } as Record<"focus" | "goldrush" | "reveal" | "versus", ColDef[]>), [t, isCensored]);
+    } as Record<"focus" | "goldrush" | "reveal" | "versus" | "medals" | "records" | "results", ColDef[]>), [t, isCensored, mulitpleConditions]);
 
     const cols = useMemo(() => colDefs[mode], [mode, colDefs]);
 

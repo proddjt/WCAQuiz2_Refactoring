@@ -1,15 +1,21 @@
 import { ActionIcon, Group, Stack } from "@mantine/core";
 import { FaCircleInfo } from "react-icons/fa6";
 
-export default function FloatingActions({children, openInfo} : {children: React.ReactNode, openInfo: () => void}) {
+interface Props {
+    children: React.ReactNode,
+    openInfo: () => void,
+    isFloating?: boolean
+}
+
+export default function Actions({children, openInfo, isFloating} : Props) {
     return (
         <Stack
         w={"100%"}
         gap={10}
         style={{
-            position: "sticky",
-            top: 15,
-            zIndex: 1,
+            position: isFloating ? "sticky" : undefined,
+            top: isFloating ? 15 : undefined,
+            zIndex: 2,
             backdropFilter: "blur(10px)",
             background: "rgba(20, 20, 20, 0.55)",
             borderRadius: 12,

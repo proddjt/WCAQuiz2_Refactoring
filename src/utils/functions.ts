@@ -76,7 +76,7 @@ export function getImageStyle(attempts: number): React.CSSProperties {
 
 export function formatTime(value: number | string, eventId: string): string {
     const str = value?.toString();
-
+    if (!str) return "-";
     // Caso speciale: 333mbd (Multi-Blind)
     if (eventId === "333mbf") {
         const padded = str.padStart(9, '0');
@@ -125,4 +125,38 @@ export function formatTime(value: number | string, eventId: string): string {
     } else {
         return `${seconds}.${cs}`;
     }
+}
+
+export function sortEventDataAsArray(data: Record<string, unknown>): unknown[] {
+  const preferredOrder = [
+    "333", "222", "444", "555", "666", "777",
+    "333bf", "333fm", "333oh", "clock", "minx",
+    "pyram", "skewb", "sq1", "444bf", "555bf", "333mbf", "333ft", "magic", "mmagic"
+  ];
+
+  const allKeys = Object.keys(data);
+
+  const sortedKeys = allKeys.sort((a, b) => {
+    const indexA = preferredOrder.indexOf(a);
+    const indexB = preferredOrder.indexOf(b);
+
+    const isAInPreferred = indexA !== -1;
+    const isBInPreferred = indexB !== -1;
+
+    if (isAInPreferred && isBInPreferred) {
+      return indexA - indexB;
+    } else if (isAInPreferred) {
+      return -1;
+    } else if (isBInPreferred) {
+      return 1;
+    } else {
+      return a.localeCompare(b);
+    }
+  });
+
+  const result: unknown[] = sortedKeys.map((key) => {
+    return { ...data[key] as object, event_name: key };
+  });
+
+  return result;
 }

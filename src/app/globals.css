@@ -60,6 +60,10 @@ a {
   font-weight: 600;
 }
 
-.table-censored {
+.text-censored {
   filter: blur(15px);
+}
+
+.focus-img {
+  cursor: pointer;
 }

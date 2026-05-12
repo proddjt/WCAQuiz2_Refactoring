@@ -1,49 +1,33 @@
 import useModals from "@/components/layout/hooks/useModals";
 import useTimer from "@/components/layout/hooks/useTimer";
-import { FocusPerson, getPerson } from "@/data/focus";
-import { getImageStyle } from "@/utils/functions";
+import { getPerson, RevealPerson } from "@/data/reveal";
 import { showAlert, showError } from "@/utils/notifications";
-import { useEffect, useEffectEvent, useMemo, useState, useTransition } from "react";
+import { useEffect, useEffectEvent, useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function useFocus(mode: string){
-    const [person, setPerson] = useState<FocusPerson | null>(null);
+export default function useReveal(mode: string, difficulty: string){
+    const [person, setPerson] = useState<RevealPerson | null>(null);
     const [attempts, setAttempts] = useState(0);
     const [gameOver, setGameOver] = useState(false);
 
     const [isPending, startTransition] = useTransition();
-
-    const imageFilters = useMemo(() => getImageStyle(attempts), [attempts]);
-
     const {errorModal, endModal} = useModals();
-    const {start, stop, reset, timer, isTimeOver} = useTimer(60);
+    const {start, stop, reset, timer, isTimeOver} = useTimer(90);
     const {t} = useTranslation();
 
     const revealAnswer = () => {
         if (gameOver) return
-        setAttempts(5);
+        setAttempts(10);
         setGameOver(true);
         stop();
         endModal(t("lose_modal_title"), t("lose_modal_desc", {person: person?.name}));
     }
-    
+
     const startNew = () => {
         reset();
         setAttempts(0);
         setGameOver(false);
         startGame();
-    }
-    
-    const startGame = () => {
-        if (!mode) return
-        startTransition(async () => {
-            const {person, error} = await getPerson(mode);
-            if (error) {
-                return errorModal();
-            }
-            setPerson(person);
-            start();
-        });
     }
 
     const checkAnswer = (answer: string) => {
@@ -57,6 +41,18 @@ export default function useFocus(mode: string){
         }
     }
 
+    const startGame = () => {
+        if (!mode || !difficulty) return
+        startTransition(async () => {
+            const {person, error} = await getPerson(mode, difficulty);
+            if (error) {
+                return errorModal();
+            }
+            setPerson(person);
+            start();
+        });
+    }
+
     const skipAnswer = () => {
         setAttempts(attempts + 1);
         reset();
@@ -65,12 +61,12 @@ export default function useFocus(mode: string){
     }
 
     const timeOver = () => {
-        if (attempts === 4) revealAnswer();
+        if (attempts === 9) revealAnswer();
         else skipAnswer();
     }
-    
-    const init = useEffectEvent(() => startGame());
 
+    const init = useEffectEvent(() => startGame());
+    
     useEffect(() => {
         init();
     }, [mode]);
@@ -80,6 +76,6 @@ export default function useFocus(mode: string){
     useEffect(() => {
         if (isTimeOver) onTimeOver();
     }, [isTimeOver])
-
-    return {attempts, gameOver, imageFilters, startNew, checkAnswer, timer, isTimeOver, isPending, person, revealAnswer, setAttempts, skipAnswer}
+    
+    return {attempts, gameOver, startNew, checkAnswer, timer, isTimeOver, isPending, person, revealAnswer, setAttempts, skipAnswer}
 }

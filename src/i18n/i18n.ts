@@ -6,7 +6,7 @@ const resources = {
         translation: {
             // NAV
             "home" : "Home",
-            "change_mode" : "Cambia modalità",
+            "change_mode" : "Cambia difficoltà",
 
             // FOOTER
             "powered" : "Sviluppato da",
@@ -103,11 +103,16 @@ const resources = {
             "yes" : "Sì",
             "confirm": "Conferma",
             "cancel": "Annulla",
+            "medals": "Medaglie",
             "gold" : "Oro",
             "silver" : "Argento",
             "bronze" : "Bronzo",
             "attempt" : "Tentativo",
             "points" : "Punti",
+            "records" : "Record",
+            "world": "Mondiali",
+            "continental": "Continentali",
+            "national": "Nazionali",
             "info_revealed" : "Informazione rivelata",
             "calculation" : "Calcolo",
             "difficulty": "Difficoltà",
@@ -242,7 +247,7 @@ const resources = {
         translation: {
             // NAV
             "home" : "Home",
-            "change_mode" : "Change mode",
+            "change_mode" : "Change difficulty",
 
             // FOOTER
             "powered" : "Powered by",
@@ -339,9 +344,14 @@ const resources = {
             "yes" : "Yes",
             "confirm": "Confirm",
             "cancel": "Cancel",
+            "medals": "Medals",
             "gold" : "Gold",
             "silver" : "Silver",
             "bronze" : "Bronze",
+            "records" : "Records",
+            "world" : "World",
+            "continental" : "Continental",
+            "national" : "National",
             "attempt" : "Attempt",
             "points" : "Points",
             "info_revealed" : "Information revealed",
