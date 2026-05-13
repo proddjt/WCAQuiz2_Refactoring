@@ -1,3 +1,5 @@
+'use client'
+
 import { Anchor, Divider, Group, Text } from "@mantine/core";
 import LanguageSelector from "./LanguageSelector";
 import { useMemo } from "react";

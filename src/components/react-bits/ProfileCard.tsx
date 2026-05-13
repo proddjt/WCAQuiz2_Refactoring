@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
-import './PersonCard.css';
+import './ProfileCard.css';
 
 interface ProfileCardProps {
   avatarUrl: string;
@@ -319,7 +321,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         '--grain': grainUrl ? `url(${grainUrl})` : 'none',
         '--inner-gradient': innerGradient ?? DEFAULT_INNER_GRADIENT,
         '--behind-glow-color': behindGlowColor ?? 'rgba(125, 190, 255, 0.67)',
-        '--behind-glow-size': behindGlowSize ?? '50%'
+        '--behind-glow-size': behindGlowSize ?? '50%',
       }) as React.CSSProperties,
     [iconUrl, grainUrl, innerGradient, behindGlowColor, behindGlowSize]
   );

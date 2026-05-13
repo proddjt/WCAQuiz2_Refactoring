@@ -1,3 +1,4 @@
+import useScreen from "@/context/Screen/useScreen";
 import { Select } from "@mantine/core";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
@@ -7,6 +8,7 @@ const COMPACT_LANGUAGES = [{value: 'en', label: 'EN'}, {value: 'it', label: 'IT'
 
 export default function LanguageSelector({compact} : {compact?: boolean}) {
     const {i18n} = useTranslation();
+    const {isMdOrLess} = useScreen();
     return (
         <Select
         variant={compact ? "light" : "transparent"}
@@ -16,7 +18,7 @@ export default function LanguageSelector({compact} : {compact?: boolean}) {
         onChange={(v) => v && i18n.changeLanguage(v)}
         allowDeselect={false}
         leftSection={<ReactCountryFlag countryCode={i18n.language === "it" ? "IT" : "US"} svg/>}
-        w={compact ? "15%" : "35%"}
+        w={compact ? "15%" : isMdOrLess ? "35%" : "10%"}
         />
     )
 }
