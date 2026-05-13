@@ -198,10 +198,9 @@ const resources = {
             "versus_heading_single" : "Chi ha un singolo ufficiale più basso in",
             "versus_heading_average" : "Chi ha una media ufficiale più bassa in",
             "versus_lose_modal_title" : "Oh no! Risposta sbagliata! 🥺",
-            "versus_lose_modal_desc_1" : "Hai ottenuto",
-            "versus_lose_modal_desc_2" : "punti! Prova a fare di più con un nuovo tentativo!",
-            "versus_next_modal_title" : "Evvai!",
-            "versus_next_modal_desc" : "Risposta corretta! Controlla il prossimo versus",
+            "versus_lose_modal_desc" : "Hai ottenuto {{points}} punti! Prova a fare di più con un nuovo tentativo!",
+            "versus_next_title" : "Evvai!",
+            "versus_next_desc" : "Risposta corretta! Controlla il prossimo versus",
 
             // VERSUS MODALE
             "versus_modal_title" : "Versus Quiz – Regole",
@@ -437,10 +436,9 @@ const resources = {
             "versus_heading_single" : "Who has a lower official single in",
             "versus_heading_average" : "Who has a lower official average in",
             "versus_lose_modal_title" : "Oh no! Wrong answer! 🥺",
-            "versus_lose_modal_desc_1" : "You got",
-            "versus_lose_modal_desc_2" : "points! Try to beat it with a new game!",
-            "versus_next_modal_title" : "Hurray!",
-            "versus_next_modal_desc" : "Correct answer! Check next versus",
+            "versus_lose_modal_desc" : "You got {{points}} points! Try to beat it with a new game!",
+            "versus_next_title" : "Hurray!",
+            "versus_next_desc" : "Correct answer! Check next versus",
 
             // VERSUS MODALE
             "versus_modal_title" : "Versus Quiz – Game Rules",
