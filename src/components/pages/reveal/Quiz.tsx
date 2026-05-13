@@ -49,14 +49,14 @@ export default function Quiz({mode, difficulty} : {mode: string, difficulty: str
 
         <Stack flex={1} hiddenFrom="md" px={"xl"} pb={"md"} pt={0} align="center" gap={30}>
             <Actions openInfo={() => {}} isFloating={true}>
-                <Group justify="space-between" align="center" gap={50} w={"100%"}>
+                <Group justify="space-between" align="center" w={"100%"}>
                     <Group justify="start" align="center" gap={5}>
-                        <Text fw={600} fz={"1.3rem"}>{t("score")}:</Text>
-                        <Text fw={600} fz={"1.3rem"} c={attempts < 3 ? "green" : attempts < 6 ? "yellow" : "red"}>{10 - attempts}</Text>
+                        <Text fw={600} fz={"1.2rem"}>{t("score")}:</Text>
+                        <Text fw={600} fz={"1.2rem"} c={attempts < 3 ? "green" : attempts < 6 ? "yellow" : "red"}>{10 - attempts}</Text>
                     </Group>
                     <Group justify="start" align="center" gap={5}>
-                        <Text fw={600} fz={"1.3rem"} >{t("time")}: </Text>
-                        <Text fw={600} fz={"1.3rem"} c={isTimeOver ? "red" : "white"} className={timer <= 10 && timer != 0 && !gameOver? "timer-blinking" : undefined}>{formatSecondsTime(timer)}</Text>
+                        <Text fw={600} fz={"1.2rem"} >{t("time")}: </Text>
+                        <Text fw={600} fz={"1.2rem"} c={isTimeOver ? "red" : "white"} className={timer <= 10 && timer != 0 && !gameOver? "timer-blinking" : undefined}>{formatSecondsTime(timer)}</Text>
                     </Group>
                     
                 </Group>
@@ -119,7 +119,7 @@ export default function Quiz({mode, difficulty} : {mode: string, difficulty: str
             Icon={RiContactsFill}
             key={attempts === 1 || attempts === 6 ? `${attempts}-PERSONAL` : "static-personal"}
             animation={attempts === 1 || attempts === 6 ? "new-clue" : ""}>
-                <Group>
+                <Group gap={5}>
                     <TextInput
                     label={t("nation")}
                     value={person?.country_name}
@@ -130,7 +130,7 @@ export default function Quiz({mode, difficulty} : {mode: string, difficulty: str
                     />
                     <TextInput
                     label="WCA ID"
-                    value={attempts < 11 ? `${person?.id.slice(0,4)}••••••` : person?.id}
+                    value={attempts < 11 && !gameOver ? `${person?.id.slice(0,4)}••••••` : person?.id}
                     readOnly
                     flex={1}
                     type={attempts < 6 && !gameOver ? "password" : undefined}

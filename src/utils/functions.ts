@@ -74,27 +74,54 @@ export function getImageStyle(attempts: number): React.CSSProperties {
   };
 }
 
-export function formatTime(value: number | string, eventId: string): string {
+export function formatTime(value: number | string, eventId: string): string | null {
     const str = value?.toString();
     if (!str) return "-";
     // Caso speciale: 333mbd (Multi-Blind)
     if (eventId === "333mbf") {
-        const padded = str.padStart(9, '0');
-        const DD = parseInt(padded.slice(0, 2), 10);
-        const TTTTT = parseInt(padded.slice(2, 7), 10);
-        const MM = parseInt(padded.slice(7, 9), 10);
+        const str = value.toString().padStart(8, "0");
+        let TTTTT;
+        let solved
+        let attempted
+        // OLD FORMAT: 1SSAATTTTT (10 digits)
+        if (str.length === 10 && str.startsWith("1")) {
+            const time = parseInt(str.slice(5, 10), 10);
 
-        const difference = 99 - DD;
-        const missed = MM;
-        const solved = difference + missed;
-        const attempted = solved + missed;
+            if (time === 99999) return null; // unknown time
 
-        const minutes = Math.floor(TTTTT / 60);
+            TTTTT = time
+            solved = (99 - +str.slice(1, 3))
+            attempted = str.slice(3, 5)
+        }
+
+        // NEW FORMAT: DDTTTTTMM (9 digits)
+        if (str.length === 9) {
+            const time = parseInt(str.slice(2, 7));
+
+            if (time === 99999) return null; // unknown time
+
+            TTTTT = time
+            const difference = (99 - +str.slice(0, 2))
+            solved = (difference + +str.slice(-2))
+            attempted = (solved + +str.slice(-2))
+        }
+
+        if (!TTTTT) return null; // formato non valido
+
+        const hours = Math.floor(TTTTT / 3600);
+        const minutes = Math.floor((TTTTT % 3600) / 60);
         const seconds = TTTTT % 60;
 
-        return `${solved}/${attempted} ${minutes}:${seconds.toString().padStart(2, '0')}`;
-    }
+        const timeString =
+          hours > 0
+            ? `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+                .toString()
+                .padStart(2, "0")}`
+            : `${minutes}:${seconds.toString().padStart(2, "0")}`;
 
+        return `${solved}/${attempted} ${timeString}`;
+      }
+    
     // Caso speciale: 333fm
     if (eventId === "333fm") {
         if (str.length === 4) {
@@ -125,6 +152,30 @@ export function formatTime(value: number | string, eventId: string): string {
     } else {
         return `${seconds}.${cs}`;
     }
+}
+
+export function decodeMBF(value: number): number | null {
+    const str = value.toString().padStart(8, "0");
+
+    // OLD FORMAT: 1SSAATTTTT (10 digits)
+    if (str.length === 10 && str.startsWith("1")) {
+        const TTTTT = parseInt(str.slice(5, 10), 10);
+
+        if (TTTTT === 99999) return null; // unknown time
+
+        return TTTTT; // seconds
+    }
+
+    // NEW FORMAT: DDTTTTTMM (9 digits)
+    if (str.length === 9) {
+        const TTTTT = parseInt(str.slice(2, 7));
+
+        if (TTTTT === 99999) return null; // unknown time
+
+        return TTTTT; // seconds
+    }
+
+    return null; // formato non valido
 }
 
 export function sortEventDataAsArray(data: Record<string, unknown>): unknown[] {

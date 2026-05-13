@@ -10,6 +10,7 @@ import Particles from "@/components/react-bits/Particles";
 import { Box } from "@mantine/core";
 import { useEffect, useMemo } from "react";
 import i18next from "i18next";
+import Footer from "@/components/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,6 +71,7 @@ export default function RootLayout({
             />
           </Box>
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

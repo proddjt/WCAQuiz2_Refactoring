@@ -1,13 +1,18 @@
 "use client"
 
+import LanguageSelector from "@/components/layout/LanguageSelector";
 import { Button, Group, Stack } from "@mantine/core";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { RiHome2Fill, RiRepeatFill } from "react-icons/ri";
 
 export default function Layout({children} : {children: React.ReactNode}) {
   const {t} = useTranslation();
   const router = useRouter();
+  const pathname = usePathname();
+  const isHome = useMemo(() => pathname === "/", [pathname]);
+
   return (
     <Stack flex={1} justify="start" gap={0}>
       <Group gap={8} justify="center" py={10}>
@@ -30,6 +35,8 @@ export default function Layout({children} : {children: React.ReactNode}) {
         >
           {t("change_mode")}
         </Button>
+
+        {!isHome && <LanguageSelector compact/>}
       </Group>
       <Stack flex={1}>
         {children}

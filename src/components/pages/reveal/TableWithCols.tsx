@@ -3,7 +3,7 @@ import { Table } from "@/components/layout/Table"
 
 interface Props {
     items: unknown[]
-    tableType: "focus" | "goldrush" | "reveal" | "versus" | "medals" | "records" | "results"
+    tableType: "focus" | "goldrush" | "versus" | "medals" | "records" | "results"
     condition?: boolean,
     multipleConditions?: boolean[]
 }

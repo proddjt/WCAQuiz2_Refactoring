@@ -12,10 +12,12 @@ import BlurText from "@/components/react-bits/BlurText";
 import HomeCard from "@/components/home/HomeCard";
 import { useRouter } from "next/navigation";
 import { FaAnglesDown } from "react-icons/fa6";
+import { useRef } from "react";
 
 export default function Home() {
   const { t } = useTranslation();
   const router = useRouter();
+  const modesRef = useRef<HTMLDivElement>(null);
   return (
     <Stack flex={1}>
       {/* FROM MD */}
@@ -54,7 +56,7 @@ export default function Home() {
         />
         <Title order={3} ta={"center"} fw={500}>{t("main_subtitle")}</Title>
 
-        <Button mt={"xl"} onClick={() => router.push("/#modes")}>
+        <Button mt={"xl"} onClick={() => modesRef.current?.scrollIntoView({behavior: "smooth"})}>
           <Group justify="center" gap={10}>
             <FaAnglesDown size={12} className="arrow-bounce"/>
             <Text>{t("choose_mode")}</Text>
@@ -62,7 +64,7 @@ export default function Home() {
           </Group>
         </Button>
       </Stack>
-      <Stack align="center" hiddenFrom="md" p={"xl"} h={"100vh"} justify="center" id="modes" gap={25}>
+      <Stack align="center" hiddenFrom="md" p={"xl"} h={"100vh"} justify="center" gap={25} ref={modesRef}>
         <Title order={2}>{t("modes")}</Title>
           <HomeCard text="Reveal" info={t("reveal_desc")} image={Reveal.src} animation="float-breeze" onClick={() => router.push("/reveal")}/>
           <HomeCard text="Focus" info={t("focus_desc")} image={Focus.src} animation="gentle-drift" onClick={() => router.push("/focus")}/>

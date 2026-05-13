@@ -41,7 +41,7 @@ export default function Quiz({mode} : {mode: string}){
         
         <Stack flex={1} hiddenFrom="md" px={"xl"} pb={"md"} pt={0} align="center" gap={30}>
             <Actions openInfo={focusModal} isFloating={true}>
-                <Group justify="space-between" align="center" gap={50} w={"100%"}>
+                <Group justify="space-between" align="center" w={"100%"}>
                     <Group justify="start" align="center" gap={5}>
                         <Text fw={600} fz={"1.5rem"}>{t("score")}:</Text>
                         <Text fw={600} fz={"1.5rem"} c={attempts < 2 ? "green" : attempts < 4 ? "yellow" : "red"}>{5 - attempts}</Text>
@@ -255,7 +255,7 @@ export default function Quiz({mode} : {mode: string}){
                 Icon={RiContactsFill}
                 key={attempts === 1 || attempts === 4 ? `${attempts}-PERSONAL` : "static"}
                 animation={attempts === 1 || attempts === 4 ? "new-clue" : ""}>
-                    <Group>
+                    <Group gap={5}>
                         <TextInput
                         label={t("nation")}
                         value={person?.country_name}
