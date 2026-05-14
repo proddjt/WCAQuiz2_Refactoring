@@ -12,7 +12,7 @@ export default function useReveal(mode: string, difficulty: string){
 
     const [isPending, startTransition] = useTransition();
     const {errorModal, endModal} = useModals();
-    const {start, stop, reset, timer, isTimeOver} = useTimer(90);
+    const {start, stop, reset, timer, isTimeOver, resetAndStart} = useTimer(90);
     const {t} = useTranslation();
 
     const revealAnswer = () => {
@@ -38,6 +38,7 @@ export default function useReveal(mode: string, difficulty: string){
         } else {
             setAttempts(attempts + 1);
             showError(t("wrong_alert_desc"), t("wrong_alert_heading"))
+            resetAndStart();
         }
     }
 
@@ -55,9 +56,8 @@ export default function useReveal(mode: string, difficulty: string){
 
     const skipAnswer = () => {
         setAttempts(attempts + 1);
-        reset();
+        resetAndStart();
         showAlert(t("skip_alert_desc"), t("skip_alert_heading"));
-        start();
     }
 
     const timeOver = () => {

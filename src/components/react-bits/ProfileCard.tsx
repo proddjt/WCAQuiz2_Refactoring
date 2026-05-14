@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, useState, JSX } from 'react';
 import './ProfileCard.css';
+import { Image } from '@mantine/core';
 
 interface ProfileCardProps {
+  isCensored?: boolean;
   avatarUrl: string;
   iconUrl?: string;
   grainUrl?: string;
@@ -15,14 +17,12 @@ interface ProfileCardProps {
   enableTilt?: boolean;
   enableMobileTilt?: boolean;
   mobileTiltSensitivity?: number;
-  miniAvatarUrl?: string;
   name?: string;
   title?: string;
-  handle?: string;
-  status?: string;
-  contactText?: string;
+  time?: string;
+  event?: JSX.Element;
   showUserInfo?: boolean;
-  onContactClick?: () => void;
+  onClick?: () => void;
 }
 
 const DEFAULT_INNER_GRADIENT = 'linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)';
@@ -41,6 +41,7 @@ const adjust = (v: number, fMin: number, fMax: number, tMin: number, tMax: numbe
   round(tMin + ((tMax - tMin) * (v - fMin)) / (fMax - fMin));
 
 const ProfileCardComponent: React.FC<ProfileCardProps> = ({
+  isCensored,
   avatarUrl = '<Placeholder for avatar URL>',
   iconUrl = '<Placeholder for icon URL>',
   grainUrl = '<Placeholder for grain URL>',
@@ -52,14 +53,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   enableTilt = true,
   enableMobileTilt = false,
   mobileTiltSensitivity = 5,
-  miniAvatarUrl,
-  name = 'Javi A. Torres',
-  title = 'Software Engineer',
-  handle = 'javicodes',
-  status = 'Online',
-  contactText = 'Contact',
+  name = '',
+  title = '',
+  time = '',
+  event = <></>,
   showUserInfo = true,
-  onContactClick
+  onClick
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
@@ -271,6 +270,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
     const handleClick = () => {
       if (!enableMobileTilt || location.protocol !== 'https:') return;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const anyMotion = window.DeviceMotionEvent as any;
       if (anyMotion && typeof anyMotion.requestPermission === 'function') {
         anyMotion
@@ -326,12 +326,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     [iconUrl, grainUrl, innerGradient, behindGlowColor, behindGlowSize]
   );
 
-  const handleContactClick = useCallback(() => {
-    onContactClick?.();
-  }, [onContactClick]);
-
+  const [imageLoaded, setImageLoaded] = useState(false);
   return (
-    <div ref={wrapRef} className={`pc-card-wrapper ${className}`.trim()} style={cardStyle}>
+    <div ref={wrapRef} className={`pc-card-wrapper ${className}`.trim()} style={cardStyle} onClick={onClick}>
       {behindGlowEnabled && <div className="pc-behind" />}
       <div ref={shellRef} className="pc-card-shell">
         <section className="pc-card">
@@ -339,45 +336,20 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
             <div className="pc-shine" />
             <div className="pc-glare" />
             <div className="pc-content pc-avatar-content">
-              <img
-                className="avatar"
+              <Image
+                className={`avatar ${imageLoaded ? 'loaded' : ''}`}
                 src={avatarUrl}
                 alt={`${name || 'User'} avatar`}
-                loading="lazy"
-                onError={e => {
-                  const t = e.target as HTMLImageElement;
-                  t.style.display = 'none';
-                }}
+                onLoad={() => setImageLoaded(true)}
               />
               {showUserInfo && (
                 <div className="pc-user-info">
                   <div className="pc-user-details">
-                    <div className="pc-mini-avatar">
-                      <img
-                        src={miniAvatarUrl || avatarUrl}
-                        alt={`${name || 'User'} mini avatar`}
-                        loading="lazy"
-                        onError={e => {
-                          const t = e.target as HTMLImageElement;
-                          t.style.opacity = '0.5';
-                          t.src = avatarUrl;
-                        }}
-                      />
-                    </div>
                     <div className="pc-user-text">
-                      <div className="pc-handle">@{handle}</div>
-                      <div className="pc-status">{status}</div>
+                      <div className={`pc-handle ${isCensored ? 'text-censored' : ''}`}>{time}</div>
+                      <div className="pc-status">{event}</div>
                     </div>
                   </div>
-                  <button
-                    className="pc-contact-btn"
-                    onClick={handleContactClick}
-                    style={{ pointerEvents: 'auto' }}
-                    type="button"
-                    aria-label={`Contact ${name || 'user'}`}
-                  >
-                    {contactText}
-                  </button>
                 </div>
               )}
             </div>

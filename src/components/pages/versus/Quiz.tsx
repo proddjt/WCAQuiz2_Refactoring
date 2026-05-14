@@ -8,13 +8,15 @@ import { useTranslation } from "react-i18next";
 import useModals from "@/components/layout/hooks/useModals";
 import ProfileCard from "@/components/react-bits/ProfileCard";
 import MyLoader from "@/components/layout/MyLoader";
+import { formatTime } from "@/utils/functions";
+import EventCell from "@/components/layout/table/EventCell";
 
 export default function Quiz(){
     const mode = useSearchParams().get("mode");
     const event = useSearchParams().get("event");
     const result = useSearchParams().get("result");
 
-    const {persons, nextGuess, isPending, checkAnswer, gameOver, score, startNew} = useVersus(mode!, event!, result!);
+    const {persons, isPending, checkAnswer, gameOver, score, startNew, isCensored} = useVersus(mode!, event!, result!);
     const {t} = useTranslation();
     const {confirmationModal} = useModals();
 
@@ -31,16 +33,36 @@ export default function Quiz(){
             </Actions>
             <Stack flex={1} hiddenFrom="md" align="center" gap={20}>
                 <ProfileCard
-                avatarUrl={persons[0]?.has_avatar ? persons[0]?.avatarUrl : "empty"}
+                avatarUrl={persons[0]?.has_avatar ? persons[0]?.avatarUrl : "/user_placeholder.jpeg"}
                 enableMobileTilt
+                enableTilt
+                behindGlowEnabled={false}
                 name={persons[0]?.name}
                 title={persons[0]?.id}
                 iconUrl={`/patterns/${event}_pattern.png`}
+                showUserInfo
+                time={formatTime(persons[0]?.result, event!) || "N/A"}
+                onClick={() => checkAnswer(persons[0]?.result, persons[1]?.result)}
+                event={<EventCell event={event!}/>}
+                />
+                <ProfileCard
+                avatarUrl={persons[1]?.has_avatar ? persons[1]?.avatarUrl : "/user_placeholder.jpeg"}
+                enableMobileTilt
+                enableTilt
+                behindGlowEnabled={false}
+                name={persons[1]?.name}
+                title={persons[1]?.id}
+                iconUrl={`/patterns/${event}_pattern.png`}
+                showUserInfo
+                time={formatTime(persons[1]?.result, event!) || "N/A"}
+                onClick={() => checkAnswer(persons[1]?.result, persons[0]?.result)}
+                event={<EventCell event={event!}/>}
+                isCensored={isCensored}
                 />
             </Stack>
             <Group flex={1} justify="center" align="center" gap={50} visibleFrom="md">
                 <ProfileCard
-                avatarUrl={persons[0]?.has_avatar ? persons[0]?.avatarUrl : "https://placehold.co/600x400"}
+                avatarUrl={persons[0]?.has_avatar ? persons[0]?.avatarUrl : "/user_placeholder.jpeg"}
                 enableMobileTilt
                 enableTilt
                 behindGlowEnabled={false}
@@ -48,9 +70,11 @@ export default function Quiz(){
                 title={persons[0]?.id}
                 iconUrl={`/patterns/${event}_pattern.png`}
                 showUserInfo={false}
+                onClick={() => checkAnswer(persons[0]?.result, persons[1]?.result)}
+                event={<EventCell event={event!}/>}
                 />
                 <ProfileCard
-                avatarUrl={persons[1]?.has_avatar ? persons[1]?.avatarUrl : "https://placehold.co/600x400"}
+                avatarUrl={persons[1]?.has_avatar ? persons[1]?.avatarUrl : "/user_placeholder.jpeg"}
                 enableMobileTilt
                 enableTilt
                 behindGlowEnabled={false}
@@ -58,6 +82,9 @@ export default function Quiz(){
                 title={persons[1]?.id}
                 iconUrl={`/patterns/${event}_pattern.png`}
                 showUserInfo={false}
+                onClick={() => checkAnswer(persons[1]?.result, persons[0]?.result)}
+                event={<EventCell event={event!}/>}
+                isCensored={isCensored}
                 />
             </Group>
         </Stack>

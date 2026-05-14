@@ -9,10 +9,12 @@ export default function useVersus(mode: string, event: string, result: string){
     const [persons, setPersons] = useState<VersusPerson[]>([]);
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
+    const [isCensored, setIsCensored] = useState(true);
     const tempRef = useRef<VersusPerson>(null);
 
     const {errorModal, endModal} = useModals();
     const [isPending, startTransition] = useTransition();
+    const [isLoadingNext, startNextTransition] = useTransition();
     const {t} = useTranslation();
 
     const loadTemp = async (actualId: string, previousId: string) => {
@@ -26,7 +28,9 @@ export default function useVersus(mode: string, event: string, result: string){
     }
 
     const nextGuess = async () => {
+        setIsCensored(false);
         showConfirm(t("versus_next_desc"), t("versus_next_title"));
+        await new Promise(resolve => setTimeout(() => {setIsCensored(true); resolve(true)}, 2500));
         if ( !persons?.length || !persons[0].id || !persons[1].id) return
         setScore(prev => prev + 1);
         let count = 0
@@ -39,8 +43,8 @@ export default function useVersus(mode: string, event: string, result: string){
         loadTemp(persons[1].id, tempRef.current.id);
     }
 
-    const checkAnswer = (first: string, second: string) => {
-        if (checkLower(first, second)) startTransition(async () => nextGuess());
+    const checkAnswer = (first: number, second: number) => {
+        if (checkLower(first, second)) startNextTransition(async () => nextGuess());
         else stopGame();
     }
 
@@ -77,5 +81,5 @@ export default function useVersus(mode: string, event: string, result: string){
         init();
     }, [mode, event, result]);
     
-    return {persons, nextGuess, isPending, checkAnswer, gameOver, score, startNew}
+    return {persons, isPending, checkAnswer, gameOver, score, startNew, isCensored, isLoadingNext};
 }

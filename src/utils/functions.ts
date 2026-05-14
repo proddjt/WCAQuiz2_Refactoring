@@ -212,6 +212,6 @@ export function sortEventDataAsArray(data: Record<string, unknown>): unknown[] {
   return result;
 }
 
-export function checkLower(a: string, b: string) {
+export function checkLower(a: number, b: number) {
   return a < b;
 }

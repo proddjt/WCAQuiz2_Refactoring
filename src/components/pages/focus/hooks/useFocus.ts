@@ -16,7 +16,7 @@ export default function useFocus(mode: string){
     const imageFilters = useMemo(() => getImageStyle(attempts), [attempts]);
 
     const {errorModal, endModal} = useModals();
-    const {start, stop, reset, timer, isTimeOver} = useTimer(60);
+    const {start, stop, reset, timer, isTimeOver, resetAndStart} = useTimer(60);
     const {t} = useTranslation();
 
     const revealAnswer = () => {
@@ -54,14 +54,14 @@ export default function useFocus(mode: string){
         } else {
             setAttempts(attempts + 1);
             showError(t("wrong_alert_desc"), t("wrong_alert_heading"))
+            resetAndStart();
         }
     }
 
     const skipAnswer = () => {
         setAttempts(attempts + 1);
-        reset();
+        resetAndStart();
         showAlert(t("skip_alert_desc"), t("skip_alert_heading"));
-        start();
     }
 
     const timeOver = () => {
