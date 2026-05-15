@@ -19,7 +19,7 @@ import TableWithCols from "./TableWithCols";
 export default function Quiz({mode, difficulty} : {mode: string, difficulty: string}){
     const {attempts, gameOver, isPending, person, isTimeOver, timer, checkAnswer, startNew, revealAnswer, skipAnswer} = useReveal(mode, difficulty);
     const {term, setTerm, isSearching, results} = useSearch(mode);
-    const {confirmationModal} = useModals();
+    const {confirmationModal, revealModal} = useModals();
     const {toggle, ConnectionDialog, opened} = useDialog();
     const { t } = useTranslation();
 
@@ -48,7 +48,7 @@ export default function Quiz({mode, difficulty} : {mode: string, difficulty: str
         <>
 
         <Stack flex={1} hiddenFrom="md" px={"xl"} pb={"md"} pt={0} align="center" gap={30}>
-            <Actions openInfo={() => {}} isFloating={true}>
+            <Actions openInfo={revealModal} isFloating={true}>
                 <Group justify="space-between" align="center" w={"100%"}>
                     <Group justify="start" align="center" gap={5}>
                         <Text fw={600} fz={"1.2rem"}>{t("score")}:</Text>

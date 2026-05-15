@@ -5,12 +5,13 @@ interface Props {
     children: React.ReactNode,
     openInfo: () => void,
     isFloating?: boolean
+    w?: string
 }
 
-export default function Actions({children, openInfo, isFloating} : Props) {
+export default function Actions({children, openInfo, isFloating, w="100%"} : Props) {
     return (
         <Stack
-        w={"100%"}
+        w={w}
         gap={10}
         style={{
             position: isFloating ? "sticky" : undefined,

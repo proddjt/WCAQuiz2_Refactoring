@@ -378,7 +378,7 @@ const resources = {
 
             // FOCUS MODALE
             "focus_modal_title" : "Focus Quiz – Game Rules",
-            "focus_modal_heading_1" : "Objective",
+            "focus_modal_heading_1" : "Goal",
             "focus_modal_desc_1" : "Guess the identity of a randomly selected person based on his/her profile picture and some information. The person is chosen according to the parameter selected in the previous setup screen.",
             "focus_modal_heading_2" : "Scoring System",
             "focus_modal_desc_2" : "You have 5 attempts to guess correctly. Each attempt reveals more information and gives less blur to the image, but awards fewer points:",
@@ -409,7 +409,7 @@ const resources = {
 
             // REVEAL MODALE
             "reveal_modal_title" : "Reveal Quiz – Game Rules",
-            "reveal_modal_heading_1" : "Objective",
+            "reveal_modal_heading_1" : "Goal",
             "reveal_modal_desc_1" : "Guess the identity of a randomly selected person based on progressively revealed information. The person is chosen according to the parameters selected in the previous setup screen.",
             "reveal_modal_heading_2" : "Scoring System",
             "reveal_modal_desc_2" : "You have 10 attempts to guess correctly. Each attempt reveals more information but awards fewer points:",
@@ -442,7 +442,7 @@ const resources = {
 
             // VERSUS MODALE
             "versus_modal_title" : "Versus Quiz – Game Rules",
-            "versus_modal_heading_1" : "Objective",
+            "versus_modal_heading_1" : "Goal",
             "versus_modal_desc_1" : "Guess who has the lower official single or average in the selected event.",
             "versus_modal_desc_2" : "If you guess correct, you get 1 point. If you guess wrong, the game stops",
             "versus_modal_desc_3" : "Try to reach the highest streak possible.",
@@ -462,7 +462,7 @@ const resources = {
 
             // GOLDRUSH MODALE
             "goldrush_modal_title" : "Goldrush Quiz – Game Rules",
-            "goldrush_modal_heading_1" : "Objective",
+            "goldrush_modal_heading_1" : "Goal",
             "goldrush_modal_desc_1" : "Guess the gold winners in all events of a selected competition. The competition is chosen according to the parameter selected in the previous setup screen.",
             "goldrush_modal_heading_2" : "Time calculation",
             "goldrush_modal_desc_2" : "You don't have a limited amount of attempts. It's just a race against time! Here's the table for time calculation:",

@@ -64,6 +64,10 @@ a {
   filter: blur(15px);
 }
 
+.card-text-censored {
+  filter: blur(8px);
+}
+
 .focus-img {
   cursor: pointer;
 }

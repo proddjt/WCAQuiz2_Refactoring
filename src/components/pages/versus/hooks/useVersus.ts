@@ -28,7 +28,6 @@ export default function useVersus(mode: string, event: string, result: string){
     }
 
     const nextGuess = async () => {
-        setIsCensored(false);
         showConfirm(t("versus_next_desc"), t("versus_next_title"));
         await new Promise(resolve => setTimeout(() => {setIsCensored(true); resolve(true)}, 2500));
         if ( !persons?.length || !persons[0].id || !persons[1].id) return
@@ -44,18 +43,23 @@ export default function useVersus(mode: string, event: string, result: string){
     }
 
     const checkAnswer = (first: number, second: number) => {
-        if (checkLower(first, second)) startNextTransition(async () => nextGuess());
+        if (checkLower(first, second)) {
+            setIsCensored(false);
+            startNextTransition(async () => nextGuess());
+        }
         else stopGame();
     }
 
     const stopGame = () => {
         setGameOver(true);
+        setIsCensored(false);
         endModal(t("versus_lose_modal_title"), t("versus_lose_modal_desc", {points: score}));
     }
 
     const startNew = () => {
         setScore(0);
         setGameOver(false);
+        setIsCensored(true);
         startGame();
     }
 

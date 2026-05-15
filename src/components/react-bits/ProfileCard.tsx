@@ -20,7 +20,9 @@ interface ProfileCardProps {
   name?: string;
   title?: string;
   time?: string;
-  event?: JSX.Element;
+  eventName: string;
+  eventIcon: JSX.Element;
+  // flag: JSX.Element;
   showUserInfo?: boolean;
   onClick?: () => void;
 }
@@ -56,7 +58,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   name = '',
   title = '',
   time = '',
-  event = <></>,
+  eventName,
+  eventIcon,
+  // flag,
   showUserInfo = true,
   onClick
 }) => {
@@ -341,13 +345,17 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 src={avatarUrl}
                 alt={`${name || 'User'} avatar`}
                 onLoad={() => setImageLoaded(true)}
+                key={avatarUrl}
               />
               {showUserInfo && (
                 <div className="pc-user-info">
                   <div className="pc-user-details">
                     <div className="pc-user-text">
-                      <div className={`pc-handle ${isCensored ? 'text-censored' : ''}`}>{time}</div>
-                      <div className="pc-status">{event}</div>
+                      <div className={`pc-handle ${isCensored ? 'card-text-censored' : ''}`}>{time}</div>
+                      <div style={{width: "100%", display: "flex", gap: 5, alignItems: "center", justifyContent: "center", fontSize: "12px"}}>
+                        {eventIcon}
+                        <p>{eventName}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -36,10 +36,10 @@ export const getPerson = async ({mode, event, result, actualId, previousId}: {mo
         if (id === actualId || id === previousId) continue
         const [personErr, personRes] = await safe(fetch(`${officialUrl}/persons/${id}`));
         const personData = personRes ? await personRes.json() : null
-        if (personErr || !personData) continue
+        if (personErr || !personData || !personData.person || !personData.personal_records || !personData.personal_records[event] || !personData.personal_records[event][result]) continue
         person = {
             id: personData.person.id,
-            name: personData?.person.name,
+            name: personData.person.name,
             result: personData.personal_records[event][result].best,
             has_avatar: !personData.person.avatar.is_default,
             avatarUrl: personData.person.avatar.url,
