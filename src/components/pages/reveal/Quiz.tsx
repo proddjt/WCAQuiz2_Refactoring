@@ -216,14 +216,16 @@ export default function Quiz({mode, difficulty} : {mode: string, difficulty: str
         }}
         >
             <Grid.Col span={1}>
+                {gameOver && 
                 <Image
-                src={attempts === 10 ? person?.avatarUrl : undefined}
+                src={person?.avatarUrl}
                 alt="Quiz image"
-                h={"500px"}
+                h={"450px"}
                 fit={"contain"}
                 bdrs={"md"}
                 />
-                <Actions openInfo={() => {}}>
+                }
+                <Actions openInfo={revealModal}>
                     <Group justify="space-between" align="center" gap={50} w={"100%"}>
                         <Group justify="start" align="center" gap={5}>
                             <Text fw={600} fz={"1.3rem"}>{t("score")}:</Text>

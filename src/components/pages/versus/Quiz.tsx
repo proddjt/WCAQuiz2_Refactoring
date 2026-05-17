@@ -45,7 +45,7 @@ export default function Quiz(){
                 iconUrl={`/patterns/${event}_pattern.png`}
                 showUserInfo
                 time={formatTime(persons[0]?.result, event!) || "N/A"}
-                onClick={() => !gameOver && checkAnswer(persons[0]?.result, persons[1]?.result)}
+                onClick={() => !gameOver && isCensored && checkAnswer(persons[0]?.result, persons[1]?.result)}
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
                 // flag={<ReactCountryFlag svg countryCode={persons[0]?.country_iso}/>}
@@ -61,7 +61,7 @@ export default function Quiz(){
                 iconUrl={`/patterns/${event}_pattern.png`}
                 showUserInfo
                 time={formatTime(persons[1]?.result, event!) || "N/A"}
-                onClick={() => !gameOver && checkAnswer(persons[1]?.result, persons[0]?.result)}
+                onClick={() => !gameOver && isCensored && checkAnswer(persons[1]?.result, persons[0]?.result)}
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
                 isCensored={isCensored}
@@ -79,7 +79,7 @@ export default function Quiz(){
                 iconUrl={`/patterns/${event}_pattern.png`}
                 showUserInfo
                 time={formatTime(persons[0]?.result, event!) || "N/A"}
-                onClick={() => !gameOver && checkAnswer(persons[0]?.result, persons[1]?.result)}
+                onClick={() => !gameOver && isCensored && checkAnswer(persons[0]?.result, persons[1]?.result)}
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
                 // flag={<ReactCountryFlag svg countryCode={persons[0]?.country_iso}/>}
@@ -95,7 +95,7 @@ export default function Quiz(){
                 iconUrl={`/patterns/${event}_pattern.png`}
                 showUserInfo
                 time={formatTime(persons[1]?.result, event!) || "N/A"}
-                onClick={() => !gameOver && checkAnswer(persons[1]?.result, persons[0]?.result)}
+                onClick={() => !gameOver && isCensored && checkAnswer(persons[1]?.result, persons[0]?.result)}
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
                 isCensored={isCensored}

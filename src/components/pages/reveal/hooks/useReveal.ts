@@ -55,6 +55,10 @@ export default function useReveal(mode: string, difficulty: string){
     }
 
     const skipAnswer = () => {
+        if (attempts === 9) {
+            revealAnswer();
+            return
+        }
         setAttempts(attempts + 1);
         resetAndStart();
         showAlert(t("skip_alert_desc"), t("skip_alert_heading"));

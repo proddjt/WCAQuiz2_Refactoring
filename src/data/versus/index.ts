@@ -36,6 +36,7 @@ export const getPerson = async ({mode, event, result, actualId, previousId}: {mo
         if (id === actualId || id === previousId) continue
         const [personErr, personRes] = await safe(fetch(`${officialUrl}/persons/${id}`));
         const personData = personRes ? await personRes.json() : null
+        console.log(personData)
         if (personErr || !personData || !personData.person || !personData.personal_records || !personData.personal_records[event] || !personData.personal_records[event][result]) continue
         person = {
             id: personData.person.id,

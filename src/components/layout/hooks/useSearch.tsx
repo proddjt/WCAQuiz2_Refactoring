@@ -18,9 +18,14 @@ export default function useSearch(mode: string){
         })
     }, 300);
 
+    const resetResults = () => {
+        setResults([])
+        setTerm("");
+    };
+
     useEffect(() => {
         search(term);
     }, [search, term]);
     
-    return {results, isSearching, term, setTerm}
+    return {results, isSearching, term, setTerm, resetResults}
 }

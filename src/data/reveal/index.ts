@@ -112,7 +112,7 @@ const pickFromList = async (list: Record<string, string>[], min_comp_number: num
     if (!min_comp_number || sliceStart === undefined || !sliceEnd || !list?.length) return null
     const unofficialUrl = process.env.NEXT_PUBLIC_UNOFFICIAL_URL
     const personList = list.slice(sliceStart, sliceEnd)
-    const id = personList[Math.floor(Math.random()*personList.length)].personId
+    const id = personList[Math.floor(Math.random()*personList.length)]?.personId
     
     const [personErr, personRes] = await safe(fetch(`${unofficialUrl}/persons/${id}.json`));
     const personData = personRes ? await personRes.json() : null

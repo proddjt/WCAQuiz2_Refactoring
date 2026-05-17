@@ -368,6 +368,8 @@ const resources = {
             "10" : "10th",
             "1_pt" : "1 pt",
             "n_pts" : "{{points}} pts",
+            "loading_error" : "Loading problems?",
+            "reload_btn" : "Reload the page",
 
             // 404
             "not_found" : "Oops! Page not found",

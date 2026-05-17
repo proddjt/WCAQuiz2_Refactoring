@@ -59,14 +59,17 @@ export default function useFocus(mode: string){
     }
 
     const skipAnswer = () => {
+        if (attempts === 4) {
+            revealAnswer();
+            return
+        }
         setAttempts(attempts + 1);
         resetAndStart();
         showAlert(t("skip_alert_desc"), t("skip_alert_heading"));
     }
 
     const timeOver = () => {
-        if (attempts === 4) revealAnswer();
-        else skipAnswer();
+        skipAnswer();
     }
     
     const init = useEffectEvent(() => startGame());
