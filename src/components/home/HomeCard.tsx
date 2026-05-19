@@ -18,9 +18,10 @@ interface InfoCardProps {
   info: string;
   animation: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
-export default function InfoCard({ image, text, info, animation, onClick }: InfoCardProps) {
+export default function InfoCard({ image, text, info, animation, onClick, disabled }: InfoCardProps) {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -35,7 +36,7 @@ export default function InfoCard({ image, text, info, animation, onClick }: Info
         transition: "transform 150ms ease, box-shadow 150ms ease",
       }}
       className={`info-card ${animation}`}
-      onClick={onClick}
+      onClick={() => !disabled && onClick()}
     >
       {/* Immagine con zoom */}
       <Box
@@ -51,6 +52,7 @@ export default function InfoCard({ image, text, info, animation, onClick }: Info
           h="100%"
           style={{
             transition: "transform 300ms ease",
+            filter: disabled ? "grayscale(1)" : undefined,
           }}
           className="info-card-img"
         />
@@ -81,6 +83,7 @@ export default function InfoCard({ image, text, info, animation, onClick }: Info
             label={info}
             opened={opened}
             withArrow
+            disabled={disabled}
             multiline
             maw={250}
           >

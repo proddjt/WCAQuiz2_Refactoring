@@ -67,13 +67,9 @@ export default function useVersus(mode: string, event: string, result: string){
         if (!mode || !event || !result) return
         startTransition(async () => {
             const {person: first, error: firstError} = await getPerson({mode, event, result});
-            if (firstError || !first) {
-                return errorModal();
-            }
+            if (firstError || !first) return errorModal();
             const {person: second, error: secondError} = await getPerson({mode, event, result, previousId: first?.id});
-            if (secondError || !second || second.id === first.id) {
-                return errorModal();
-            }
+            if (secondError || !second || second.id === first.id) return errorModal();
             setPersons([first, second]);
             loadTemp(first.id, second.id);
         });

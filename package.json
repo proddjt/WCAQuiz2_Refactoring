@@ -16,6 +16,7 @@
     "@mantine/modals": "^9.1.1",
     "@mantine/notifications": "^9.1.1",
     "ag-grid-react": "^35.2.1",
+    "dayjs": "^1.11.20",
     "i18next": "^26.0.8",
     "motion": "^12.38.0",
     "next": "16.2.4",

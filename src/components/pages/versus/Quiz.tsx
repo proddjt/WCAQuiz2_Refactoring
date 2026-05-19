@@ -14,10 +14,10 @@ import useScreen from "@/context/Screen/useScreen";
 // import ReactCountryFlag from "react-country-flag";
 
 export default function Quiz(){
-    const mode = useSearchParams().get("mode");
-    const event = useSearchParams().get("event");
-    const result = useSearchParams().get("result");
-
+    const searchParams = useSearchParams();
+    const mode = searchParams.get("mode");
+    const event = searchParams.get("event");
+    const result = searchParams.get("result");
     const {persons, isPending, checkAnswer, gameOver, score, startNew, isCensored} = useVersus(mode!, event!, result!);
     const {t} = useTranslation();
     const {confirmationModal, versusModal} = useModals();

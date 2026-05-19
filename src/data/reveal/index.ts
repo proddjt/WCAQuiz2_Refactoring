@@ -60,9 +60,7 @@ export const getPerson = async (mode: string, difficulty: string): Promise<{pers
         let selectedType = type[Math.floor(Math.random()*type.length)]
         if (selectedEvent === "333mbf" && selectedType === "average") selectedType = "single"
         
-        const [listErr, listRes] = await safe(fetch(`${unofficialUrl}/rank/${mode}/${selectedType}/${selectedEvent}.json`));
-        
-        const list = listRes ? await listRes.json() : null
+        const [listErr, list] = await safe(`${unofficialUrl}/rank/${mode}/${selectedType}/${selectedEvent}.json`);
         if (listErr || !list || !list.items || list.items.length === 0) continue
 
         let tryCount = 0
@@ -76,8 +74,7 @@ export const getPerson = async (mode: string, difficulty: string): Promise<{pers
     }
     if (!check) return {person: null, error: true}
 
-    const [personErr, personRes] = await safe(fetch(`${officialUrl}/persons/${person.id}`));
-    const personData = personRes ? await personRes.json() : null
+    const [personErr, personData] = await safe(`${officialUrl}/persons/${person.id}`);
     if (personErr || !personData) return {person: null, error: true}
     
     return {
@@ -114,9 +111,7 @@ const pickFromList = async (list: Record<string, string>[], min_comp_number: num
     const personList = list.slice(sliceStart, sliceEnd)
     const id = personList[Math.floor(Math.random()*personList.length)]?.personId
     
-    const [personErr, personRes] = await safe(fetch(`${unofficialUrl}/persons/${id}.json`));
-    const personData = personRes ? await personRes.json() : null
-    
+    const [personErr, personData] = await safe(`${unofficialUrl}/persons/${id}.json`);
     if (personErr || !personData || personData.competition_count < min_comp_number) return null
     return personData
 }

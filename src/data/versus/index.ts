@@ -21,21 +21,16 @@ export const getPerson = async ({mode, event, result, actualId, previousId}: {mo
     let count = 0
     while (!check && count < 10) {
         count += 1
-        const [pageErr, pagesRes] = await safe(fetch(`${unofficialUrl}/rank/${mode}/single/333.json`))
-        const pages = pagesRes ? await pagesRes.json() : null
-        
+        const [pageErr, pages] = await safe(`${unofficialUrl}/rank/${mode}/single/333.json`)
         if (pageErr || !pages || pages.total === 0) continue
 
         const totalPages = Math.ceil(pages.total / pages.pagination.size);
-        const [listErr, listRes] = await safe(fetch(`${unofficialUrl}/rank/${mode}/single/333.json?page=${Math.floor(Math.random() * totalPages) + 1}`));
-        
-        const list = listRes ? await listRes.json() : null
+        const [listErr, list] = await safe(`${unofficialUrl}/rank/${mode}/single/333.json?page=${Math.floor(Math.random() * totalPages) + 1}`);
         if (listErr || !list || !list.items || list.items.length === 0) continue
 
         const id = list.items[Math.floor(Math.random()*list.items.length)].personId;
         if (id === actualId || id === previousId) continue
-        const [personErr, personRes] = await safe(fetch(`${officialUrl}/persons/${id}`));
-        const personData = personRes ? await personRes.json() : null
+        const [personErr, personData] = await safe(`${officialUrl}/persons/${id}`);
         console.log(personData)
         if (personErr || !personData || !personData.person || !personData.personal_records || !personData.personal_records[event] || !personData.personal_records[event][result]) continue
         person = {

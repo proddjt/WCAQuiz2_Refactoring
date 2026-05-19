@@ -215,3 +215,21 @@ export function sortEventDataAsArray(data: Record<string, unknown>): unknown[] {
 export function checkLower(a: number, b: number) {
   return a < b;
 }
+
+export function weightedRandomIndex(length: number, difficulty: string) {
+    const weights = [];
+    for (let i = 0; i < length; i++) {
+        if (difficulty == "hd") weights[i] = i > (2 * length) / 3 ? 3 : 1;
+        else weights[i] = 1
+    }
+    const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+
+    let random = Math.random() * totalWeight;
+
+    for (let i = 0; i < length; i++) {
+        if (random < weights[i]) return i;
+        random -= weights[i];
+    }
+
+    return length - 1;
+}

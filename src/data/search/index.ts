@@ -10,8 +10,7 @@ const modeToContinentMap = new Map([
 
 export async function fetchSearchBar(name: string, mode: string) {
     const url = process.env.NEXT_PUBLIC_OFFICIAL_URL
-    const [error, response] = await safe(fetch(`${url}/search/users?q=${name}&persons_table=true`));
-    const data = await response.json();
+    const [error, data] = await safe(`${url}/search/users?q=${name}&persons_table=true`);
     if (!data?.result || !Array.isArray(data.result) || error) return [];
 
     if (mode === "world") return data.result

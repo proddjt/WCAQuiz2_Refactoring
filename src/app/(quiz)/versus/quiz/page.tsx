@@ -1,10 +1,13 @@
 'use client'
 
 import Quiz from "@/components/pages/versus/Quiz";
+import { Suspense } from "react";
 
 export default function Page(){
     
     return (
-        <Quiz />
+        <Suspense>
+            <Quiz />
+        </Suspense>
     )
 }
