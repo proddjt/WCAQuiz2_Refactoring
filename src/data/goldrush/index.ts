@@ -65,8 +65,8 @@ export const getComp = async (mode: "ez" | "md" | "hd"): Promise<{comp: Goldrush
       mode == "ez" &&
       (comp.length > 120 || randomComp.name.includes("Italian Championship") || randomComp.name.includes("FMC Italy"))
     ) {
-      if (randomComp.events.length >= 10) time = 5;
-      else time = randomComp.events.length * 0.5;
+      if (randomComp.events.length >= 8) time = 360;
+      else time = randomComp.events.length * 45;
 
     } else if (
       mode == "md" &&
@@ -75,8 +75,8 @@ export const getComp = async (mode: "ez" | "md" | "hd"): Promise<{comp: Goldrush
       !randomComp.name.includes("FMC Italy") &&
       dayjs(randomComp.date.till).isAfter(dayjs().subtract(7, "year"))
     ) {
-      if (randomComp.events.length >= 7) time = 7;
-      else time = randomComp.events.length;
+      if (randomComp.events.length >= 7) time = 420;
+      else time = randomComp.events.length * 60;
 
     } else if (
       mode === "hd" &&
@@ -85,8 +85,8 @@ export const getComp = async (mode: "ez" | "md" | "hd"): Promise<{comp: Goldrush
       !randomComp.name.includes("Italian Championship") &&
       !randomComp.name.includes("FMC Italy")
     ) {
-      if (randomComp.events.length > 10) time = 10;
-      else time = randomComp.events.length * 1.5;
+      if (randomComp.events.length > 10) time = 600;
+      else time = randomComp.events.length * 90;
     }
     console.log(randomComp.name)
     if (time === 0) continue;

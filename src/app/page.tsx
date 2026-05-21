@@ -69,7 +69,7 @@ export default function Home() {
           <HomeCard text="Reveal" info={t("reveal_desc")} image={Reveal.src} animation="float-breeze" onClick={() => router.push("/reveal")}/>
           <HomeCard text="Focus" info={t("focus_desc")} image={Focus.src} animation="gentle-drift" onClick={() => router.push("/focus")}/>
           <HomeCard text="Versus" info={t("versus_desc")} image={Versus.src} animation="wind-sway" onClick={() => router.push("/versus")}/>
-          <HomeCard text="Goldrush" info={t("goldrush_desc")} image={Goldrush.src} animation="float-breeze" onClick={() => router.push("/goldrush")} disabled/>
+          <HomeCard text="Goldrush" info={t("goldrush_desc")} image={Goldrush.src} animation="float-breeze" onClick={() => router.push("/goldrush")}/>
       </Stack>
     </Stack>
   );

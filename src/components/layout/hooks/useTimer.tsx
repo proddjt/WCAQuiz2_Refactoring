@@ -32,10 +32,16 @@ export default function useTimer(startValue: number) {
   };
 
   const resetAndStart = () => {
-    stop();              // 1. stop sicuro
-    setTimer(startValue); // 2. reset immediato
-    start();              // 3. riparte subito
+    stop();
+    setTimer(startValue);
+    start();
   };
+
+  const startWithTime = (time: number) => {
+    stop();
+    setTimer(time);
+    start();
+  }
 
   const isTimeOver = useMemo(() => timer === 0, [timer]);
 
@@ -43,5 +49,5 @@ export default function useTimer(startValue: number) {
     return () => stop();
   }, []);
 
-  return { timer, isTimeOver, start, stop, reset, resetAndStart };
+  return { timer, isTimeOver, start, stop, reset, resetAndStart, startWithTime };
 }
