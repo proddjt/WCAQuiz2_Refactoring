@@ -2,6 +2,7 @@ import { Button, Group, Image, Stack, Table, Text, Title } from "@mantine/core"
 import { modals } from "@mantine/modals"
 import { CSSProperties } from "react";
 import { useTranslation } from "react-i18next"
+import AnswerModal from "../AnswerModal";
 
 export default function useModals(){
     const {t} = useTranslation();
@@ -39,6 +40,13 @@ export default function useModals(){
             cancelProps: {color: "red", variant: "light"},
             onCancel: () => modals.close(id),
             onConfirm: () => {modals.close(id); onConfirm()}
+        })
+    }
+
+    const goldrushAnswerModal = (event: string, onConfirm: (v: string) => Promise<unknown>) => {
+        modals.open({
+            children: <AnswerModal event={event} onConfirm={onConfirm}/>,
+            withCloseButton: true
         })
     }
 
@@ -205,5 +213,5 @@ export default function useModals(){
         })
     }
 
-    return {errorModal, confirmationModal, imgModal, endModal, focusModal, revealModal, versusModal}
+    return {errorModal, confirmationModal, imgModal, endModal, focusModal, revealModal, versusModal, goldrushAnswerModal}
 }

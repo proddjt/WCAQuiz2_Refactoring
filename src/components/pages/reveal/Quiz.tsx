@@ -1,3 +1,5 @@
+'use client'
+
 import useDialog from "@/components/layout/hooks/useDialog";
 import useModals from "@/components/layout/hooks/useModals";
 import useSearch from "@/components/layout/hooks/useSearch";

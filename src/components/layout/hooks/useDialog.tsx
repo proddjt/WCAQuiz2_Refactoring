@@ -11,7 +11,7 @@ export default function useDialog(){
             <Text size="md" mb="xs" fw={500}>
                 {t("loading_error")}
             </Text>
-            <Group align="flex-end">
+            <Group justify="flex-end" w={"100%"}>
                 <Button onClick={() => {window.location.reload();close();}}>{t("reload_btn")}</Button>
             </Group>
         </Dialog>

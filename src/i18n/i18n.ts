@@ -130,6 +130,8 @@ const resources = {
             "n_pts" : "{{points}} pti",
             "loading_error" : "Problemi di caricamento?",
             "reload_btn" : "Ricarica la pagina",
+            "table_results": "Risultati",
+            "insert_answer": "Inserisci",
 
             // 404
             "not_found" : "Oops! Pagina non trovata",
@@ -239,6 +241,10 @@ const resources = {
             "goldrush_modal_desc_3" : "Durante il gioco verranno svelati progressivamente tre indizi. Il primo (persone che hanno vinto il bronzo) al superamento del 40% del tempo, il secondo (lista completa dei partecipanti alla gara) al superamento del 50% del tempo e il terzo (persone che hanno vinto l'argento) al superamento del 70% del tempo.",
             "goldrush_win_modal_desc" : "Hai indovinato tutti i vincitori di oro in questa competizione con ancora {{number}} secondi rimasti",
             "goldrush_lose_modal_desc" : "Ti mancavano ancora {{number}} vincitori da indovinare, ma il tempo è scaduto! Riprovaci ancora",
+
+            "goldrush_answer_text": "Inserisci la risposta per l'evento {{event}}",
+            "goldrush_answer_error": "Risposta sbagliata! Riprova",
+            "goldrush_correct_answer": "Risposta corretta! {{person}} ha vinto {{event}}!",
         }
     },
     en: {
@@ -369,6 +375,8 @@ const resources = {
             "n_pts" : "{{points}} pts",
             "loading_error" : "Loading problems?",
             "reload_btn" : "Reload the page",
+            "table_results": "Results",
+            "insert_answer": "Insert",
 
             // 404
             "not_found" : "Oops! Page not found",
@@ -480,6 +488,10 @@ const resources = {
             "goldrush_win_modal_desc_2" : "seconds left",
             "goldrush_lose_modal_desc_1" : "You still had",
             "goldrush_lose_modal_desc_2" : "winners left to guess but time was up! Try again",
+
+            "goldrush_answer_text": "Insert the answer for the event {{event}}",
+            "goldrush_answer_error": "Wrong answer! Try again",
+            "goldrush_correct_answer": "Correct answer! {{person}} has won {{event}}!",
         }
     }
 };

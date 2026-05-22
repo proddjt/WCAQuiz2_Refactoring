@@ -71,3 +71,8 @@ a {
 .focus-img {
   cursor: pointer;
 }
+
+.centered-cell {
+  display: flex;
+  align-items: center;
+}

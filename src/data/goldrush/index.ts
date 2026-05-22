@@ -27,6 +27,7 @@ type PodiumType = {
 
 type PodiumPersonType = {
   id: string,
+  name: string,
   position: number,
   best: string,
   average: string
@@ -101,6 +102,7 @@ export const getComp = async (mode: "ez" | "md" | "hd"): Promise<{comp: Goldrush
           results.items.length > 0
             ? {
                 id: results.items[0].personId,
+                name: competitors.find((c) => c.id === results.items[0].personId)?.name || "",
                 position: results.items[0].position,
                 best: results.items[0].best,
                 average: results.items[0].average,
@@ -110,6 +112,7 @@ export const getComp = async (mode: "ez" | "md" | "hd"): Promise<{comp: Goldrush
           results.items.length > 1
             ? {
                 id: results.items[1].personId,
+                name: competitors.find((c) => c.id === results.items[1].personId)?.name || "",
                 position: results.items[1].position,
                 best: results.items[1].best,
                 average: results.items[1].average,
@@ -119,6 +122,7 @@ export const getComp = async (mode: "ez" | "md" | "hd"): Promise<{comp: Goldrush
           results.items.length > 2
             ? {
                 id: results.items[2].personId,
+                name: competitors.find((c) => c.id === results.items[2].personId)?.name || "",
                 position: results.items[2].position,
                 best: results.items[2].best,
                 average: results.items[2].average,
