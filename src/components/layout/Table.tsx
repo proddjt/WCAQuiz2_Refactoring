@@ -55,6 +55,7 @@ function Table({
       onSelectionChanged={onSelectionChanged}
       rowSelection={rowSelection}
       theme={myTheme}
+      containerStyle={{ flexGrow: 1}}
     />
   );
 }

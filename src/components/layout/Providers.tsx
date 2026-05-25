@@ -6,11 +6,19 @@ import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { I18nextProvider } from "react-i18next";
 
-import { ValidationModule, ClientSideRowModelModule, ModuleRegistry, LocaleModule, CellStyleModule } from "ag-grid-community";
+import {
+  ValidationModule,
+  ClientSideRowModelModule,
+  ModuleRegistry,
+  LocaleModule,
+  CellStyleModule,
+  ScrollApiModule,
+  ColumnApiModule,
+} from "ag-grid-community";
 import { Notifications } from "@mantine/notifications";
 import { GoldrushGuessedEventsProvider } from "@/context/GoldrushGuessedEvents/GoldrushGuessedEventsProvider";
 
-ModuleRegistry.registerModules([ClientSideRowModelModule, ValidationModule, LocaleModule, CellStyleModule]);
+ModuleRegistry.registerModules([ClientSideRowModelModule, ValidationModule, LocaleModule, CellStyleModule, ScrollApiModule, ColumnApiModule]);
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

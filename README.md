@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WCAQuiz
 
-## Getting Started
+**WCAQuiz** è un'app web sviluppata in **Next.js** che trasforma il mondo della [World Cube Association](https://www.worldcubeassociation.org/) in un'esperienza di gioco interattiva. Attraverso tre modalità di quiz, gli utenti possono mettere alla prova la propria conoscenza delle persone registrate su WCA, cercando di indovinarne identità, risultati e dettagli.
 
-First, run the development server:
+## Modalità di gioco
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Reveal
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La modalità classica. Hai 10 tentativi per indovinare correttamente una persona WCA. Ad ogni errore, riceverai un indizio utile per restringere il campo.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Focus
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Basata sulle immagini WCA. Ti verrà mostrata una foto completamente sfocata di una persona. Hai 5 tentativi per indovinare chi è. Ogni errore rivelerà un indizio e un'immagine progressivamente meno sfocata.
 
-## Learn More
+### Versus
 
-To learn more about Next.js, take a look at the following resources:
+Una sfida in stile confronto diretto. Scegli un evento WCA e ti verranno proposte due persone. Dovrai scegliere chi tra le due ha la media o il singolo ufficiale più basso nell'evento selezionato.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Fonti dati
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+L'app interagisce con:
 
-## Deploy on Vercel
+- L'API ufficiale WCA: [worldcubeassociation.org/api/v0](https://www.worldcubeassociation.org/api/v0)
+- L'API non ufficiale di Robin Ingelbrecht: [robiningelbrecht/wca-rest-api](https://wca-rest-api.robiningelbrecht.be/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Note sulla versione
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Questa versione è un refactoring completo della [versione precedente](https://github.com/proddjt/WCAQuiz2). Le principali novità rispetto alla precedente release sono:
+
+- **Nuova libreria di componenti**: migrazione da HeroUI a [Mantine](https://mantine.dev/)
+- **Maggiore stabilità**: architettura del codice rivista per garantire un'esperienza più affidabile
+- **Bug fix**: corretti numerosi bug presenti nella versione precedente
+
+## Autori
+
+- Ideazione e sviluppo: [Giovanni Tramontano](https://www.worldcubeassociation.org/persons/2013TRAM03)
+- Design e grafiche: [Carmen Gravano](https://www.worldcubeassociation.org/persons/2022GRAV05)
+
+Nessuno dei due è affiliato ufficialmente con il team WCA.
+
+## Live
+
+L'app è disponibile online all'indirizzo:  
+[https://wcaquiz.xyz](https://wcaquiz.xyz)
+
+## Contatti
+
+Per domande, suggerimenti o segnalazioni:
+
+- Usa la sezione **Issues** della repository
+- Oppure contatta Giovanni su Telegram: [@gitra17](https://t.me/gitra17)

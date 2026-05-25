@@ -213,5 +213,45 @@ export default function useModals(){
         })
     }
 
-    return {errorModal, confirmationModal, imgModal, endModal, focusModal, revealModal, versusModal, goldrushAnswerModal}
+    const goldrushModal = () => {
+        const id = modals.open({
+            children:
+            <Stack gap={5}>
+                <Title order={2}>{t("goldrush_modal_title")}</Title>
+                <Text fw={700} fz={"md"}>{t("goldrush_modal_heading_1")}</Text>
+                <Text pb={10}>{t("goldrush_modal_desc_1")}</Text>
+                <Text fw={700} fz={"md"}>{t("goldrush_modal_heading_2")}</Text>
+                <Text pb={10}>{t("goldrush_modal_desc_2")}</Text>
+                <Table>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th>{t("modes")}</Table.Th>
+                            <Table.Th>{t("goldrush_time_given")}</Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                        <Table.Tr>
+                            <Table.Td>{t("goldrush_modal_table_1_head")}</Table.Td>
+                            <Table.Td>{t("goldrush_modal_table_1_desc_1")}</Table.Td>
+                        </Table.Tr>
+                        <Table.Tr>
+                            <Table.Td>{t("goldrush_modal_table_2_head")}</Table.Td>
+                            <Table.Td>{t("goldrush_modal_table_2_desc_1")}</Table.Td>
+                        </Table.Tr>
+                        <Table.Tr>
+                            <Table.Td>{t("goldrush_modal_table_3_head")}</Table.Td>
+                            <Table.Td>{t("goldrush_modal_table_3_desc_1")}</Table.Td>
+                        </Table.Tr>
+                    </Table.Tbody>
+                </Table>
+                <Text fw={700} fz={"md"}>{t("goldrush_modal_heading_3")}</Text>
+                <Text pb={10}>{t("goldrush_modal_desc_3")}</Text>
+                <Group justify="end" w={"100%"}>
+                    <Button onClick={() => modals.close(id)} color="red" variant="light">{t("close")}</Button>
+                </Group>
+            </Stack>
+        })
+    }
+
+    return {errorModal, confirmationModal, imgModal, endModal, focusModal, revealModal, versusModal, goldrushAnswerModal, goldrushModal}
 }

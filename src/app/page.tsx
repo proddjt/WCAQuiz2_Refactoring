@@ -40,7 +40,7 @@ export default function Home() {
           </Group>
           <Group justify="center"w={"100%"} gap={75}>
             <HomeCard text="Versus" info={t("versus_desc")} image={Versus.src} animation="wind-sway" onClick={() => router.push("/versus")}/>
-            <HomeCard text="Goldrush" info={t("goldrush_desc")} image={Goldrush.src} animation="float-breeze" onClick={() => router.push("/goldrush")} disabled/>
+            <HomeCard text="Goldrush" info={t("goldrush_desc")} image={Goldrush.src} animation="float-breeze" onClick={() => router.push("/goldrush")}/>
           </Group>
         </Stack>
       </Group>

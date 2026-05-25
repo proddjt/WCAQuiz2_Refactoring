@@ -1,4 +1,5 @@
 import useModals from "@/components/layout/hooks/useModals";
+import useSectionRefs from "@/components/layout/hooks/useSectionRefs";
 import useTimer from "@/components/layout/hooks/useTimer";
 import { FocusPerson, getPerson } from "@/data/focus";
 import { getImageStyle } from "@/utils/functions";
@@ -18,6 +19,7 @@ export default function useFocus(mode: string){
     const {errorModal, endModal} = useModals();
     const {start, stop, reset, timer, isTimeOver, resetAndStart} = useTimer(60);
     const {t} = useTranslation();
+    const {refs, assignRef} = useSectionRefs();
 
     const revealAnswer = () => {
         if (gameOver) return
@@ -52,6 +54,8 @@ export default function useFocus(mode: string){
             stop();
             endModal(t("win_modal_title"), t("win_modal_desc", {person: person?.name, points: 5 - attempts}));
         } else {
+            const target = refs.current[attempts+1];
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
             setAttempts(attempts + 1);
             showError(t("wrong_alert_desc"), t("wrong_alert_heading"))
             resetAndStart();
@@ -63,6 +67,8 @@ export default function useFocus(mode: string){
             revealAnswer();
             return
         }
+        const target = refs.current[attempts+1];
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
         setAttempts(attempts + 1);
         resetAndStart();
         showAlert(t("skip_alert_desc"), t("skip_alert_heading"));
@@ -84,5 +90,5 @@ export default function useFocus(mode: string){
         if (isTimeOver) onTimeOver();
     }, [isTimeOver])
 
-    return {attempts, gameOver, imageFilters, startNew, checkAnswer, timer, isTimeOver, isPending, person, revealAnswer, setAttempts, skipAnswer}
+    return {attempts, gameOver, imageFilters, startNew, checkAnswer, timer, isTimeOver, isPending, person, revealAnswer, setAttempts, skipAnswer, assignRef}
 }

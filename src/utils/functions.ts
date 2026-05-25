@@ -11,6 +11,12 @@ export interface PersonalRecord {
   average?: Omit<RankedResult, 'type'>;
 }
 
+export const preferredOrder = [
+  "333", "222", "444", "555", "666", "777",
+  "333bf", "333fm", "333oh", "clock", "minx",
+  "pyram", "skewb", "sq1", "444bf", "555bf", "333mbf", "333ft", "magic", "mmagic"
+];
+
 export function getBestRankedRecord(personalRecords: Record<string, PersonalRecord>): RankedResult[] {
   const allRecords: RankedResult[] = Object.values(personalRecords)
     .flatMap(event => [
@@ -179,11 +185,6 @@ export function decodeMBF(value: number): number | null {
 }
 
 export function sortEventDataAsArray(data: Record<string, unknown>): unknown[] {
-  const preferredOrder = [
-    "333", "222", "444", "555", "666", "777",
-    "333bf", "333fm", "333oh", "clock", "minx",
-    "pyram", "skewb", "sq1", "444bf", "555bf", "333mbf", "333ft", "magic", "mmagic"
-  ];
 
   const allKeys = Object.keys(data);
 
@@ -233,3 +234,10 @@ export function weightedRandomIndex(length: number, difficulty: string) {
 
     return length - 1;
 }
+
+export const checkPercentage = (total: number, value: number, percentage: number) => {
+  const target = total * (percentage / 100);
+  const tolerance = Math.max(1, target * 0.05); 
+  return Math.abs(value - target) <= tolerance;
+}
+

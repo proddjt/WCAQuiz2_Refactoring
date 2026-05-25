@@ -10,11 +10,12 @@ interface Props {
   Icon: IconType;
   h?: string | number;
   animation?: string;
+  assignRef?: (el: HTMLElement | null) => void
 }
 
 const colors = ["#FA5252", "#FD7E14", "#FAB005", "#40C057", "#228BE6", "#F8F9FA"];
 
-export default function Card({ title, children, Icon, h, animation }: Props) {
+export default function Card({ title, children, Icon, h, animation, assignRef }: Props) {
     const [color, setColor] = useState<string>("");
 
     useEffect(() => {
@@ -32,6 +33,7 @@ export default function Card({ title, children, Icon, h, animation }: Props) {
             borderColor: color,
             boxShadow: `0 0 8px 2px ${color}40`, // 40 = 25% opacity
         }}
+        ref={assignRef}
         >
         <Stack gap={10} h={h ? "100%" : undefined}>
             <Group justify="space-between">

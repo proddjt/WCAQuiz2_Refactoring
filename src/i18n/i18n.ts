@@ -231,6 +231,7 @@ const resources = {
             "goldrush_modal_desc_1" : "Indovina tutti i vincitori di oro in tutti gli eventi di una competizione selezionata. La competizione viene scelta in base al parametro selezionato nella schermata precedente.",
             "goldrush_modal_heading_2" : "Calcolo del tempo",
             "goldrush_modal_desc_2" : "Non hai un numero limitato di tentativi. È solo una corsa contro il tempo! Di seguito la tabella per il calcolo del tempo:",
+            "goldrush_time_given": "Tempo concesso",
             "goldrush_modal_table_1_head" : "Modalità facile",
             "goldrush_modal_table_1_desc_1" : "Viene assegnato un tempo di 45 secondi per ogni evento presente nella competizione selezionata, fino ad un massimo di 6 minuti totali",
             "goldrush_modal_table_2_head" : "Modalità media",
@@ -245,6 +246,7 @@ const resources = {
             "goldrush_answer_text": "Inserisci la risposta per l'evento {{event}}",
             "goldrush_answer_error": "Risposta sbagliata! Riprova",
             "goldrush_correct_answer": "Risposta corretta! {{person}} ha vinto {{event}}!",
+            "goldrush_skip": "È passato il {{perc}}% del tempo. Controlla il prossimo indizio",
         }
     },
     en: {
@@ -476,6 +478,7 @@ const resources = {
             "goldrush_modal_desc_1" : "Guess the gold winners in all events of a selected competition. The competition is chosen according to the parameter selected in the previous setup screen.",
             "goldrush_modal_heading_2" : "Time calculation",
             "goldrush_modal_desc_2" : "You don't have a limited amount of attempts. It's just a race against time! Here's the table for time calculation:",
+            "goldrush_time_given": "Time given",
             "goldrush_modal_table_1_head" : "Easy mode",
             "goldrush_modal_table_1_desc_1" : "It will be assigned a time of 45 seconds for each event present in the selected competition, up to a maximum of 6 minutes total",
             "goldrush_modal_table_2_head" : "Medium mode",
@@ -492,6 +495,7 @@ const resources = {
             "goldrush_answer_text": "Insert the answer for the event {{event}}",
             "goldrush_answer_error": "Wrong answer! Try again",
             "goldrush_correct_answer": "Correct answer! {{person}} has won {{event}}!",
+            "goldrush_skip": "{{perc}}% of the time has passed. Check the next hint",
         }
     }
 };

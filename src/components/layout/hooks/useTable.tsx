@@ -74,7 +74,7 @@ export default function useTable(
             headerName: t("first"),
             field: "first.name",
             maxWidth: 200,
-            cellRenderer: (params: CustomCellRendererProps) => <ClickableCell params={params} />,
+            cellRenderer: (params: CustomCellRendererProps) => <ClickableCell params={params} condition={multipleConditions?.[0] || false} />,
             cellClass: "centered-cell",
           },
           {

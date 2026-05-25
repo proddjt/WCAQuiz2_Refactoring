@@ -2,8 +2,7 @@
 
 import MyLoader from "@/components/layout/MyLoader";
 import useGoldRush from "./hooks/useGoldRush";
-import { Button, Group, Stack, Text, TextInput, Title } from "@mantine/core";
-import useScreen from "@/context/Screen/useScreen";
+import { Button, Grid, Group, Stack, Text, TextInput, Title } from "@mantine/core";
 import Actions from "@/components/layout/Actions";
 import { useTranslation } from "react-i18next";
 import useModals from "@/components/layout/hooks/useModals";
@@ -18,19 +17,31 @@ import MyList from "@/components/layout/MyList";
 import useGoldrushGuessedEvents from "@/context/GoldrushGuessedEvents/useGoldrushGuessedEvents";
 
 export default function Quiz({ mode }: { mode?: "ez" | "md" | "hd" }) {
-  const { isPending, comp, gameOver, startNew, revealAnswer, timer, attempts, tableContext } = useGoldRush(mode);
-  const { isMdOrLess } = useScreen();
+  const {
+    isPending,
+    comp,
+    gameOver,
+    startNew,
+    revealAnswer,
+    timer,
+    attempts,
+    tableContext,
+    tableRef,
+    skipAnswer,
+    getOrderedEvents,
+    assignRef,
+  } = useGoldRush(mode);
   const { t } = useTranslation();
-  const { confirmationModal } = useModals();
+  const { confirmationModal, goldrushModal } = useModals();
   const { toggle, ConnectionDialog, opened } = useDialog();
   const { guessedEvents } = useGoldrushGuessedEvents();
 
   useEffect(() => {
-    if (!isPending || opened) return;
+    if (!isPending || opened) return
 
     const timeoutId = setTimeout(() => {
       toggle();
-    }, 8000);
+    }, 10000);
 
     return () => {
       clearTimeout(timeoutId);
@@ -39,10 +50,10 @@ export default function Quiz({ mode }: { mode?: "ez" | "md" | "hd" }) {
 
   if (isPending) return <MyLoader Dialog={ConnectionDialog} />;
 
-  console.log((comp?.events?.length || 0) - guessedEvents.length)
   return (
-    <Stack flex={1} px={"xl"} pb={"md"} pt={0} align="center" gap={30}>
-      <Actions openInfo={() => {}} w={isMdOrLess ? "100%" : "30%"}>
+    <>
+    <Stack flex={1} px={"xl"} pb={"md"} pt={0} align="center" gap={30} hiddenFrom="md">
+      <Actions openInfo={goldrushModal} w={"100%"}>
         <Group justify="space-between" align="center" w={"100%"}>
           <Group justify="center" align="center" gap={5}>
             <Text fw={600} fz={"1.2rem"}>
@@ -66,7 +77,7 @@ export default function Quiz({ mode }: { mode?: "ez" | "md" | "hd" }) {
             </Text>
           </Group>
         </Group>
-        <Button fullWidth disabled={gameOver} variant="light" onClick={() => confirmationModal(t("skip_answ_modal_desc"), () => {})}>
+        <Button fullWidth disabled={gameOver} variant="light" onClick={() => confirmationModal(t("skip_answ_modal_desc"), skipAnswer)}>
           {t("skip")}
         </Button>
         <Button
@@ -87,34 +98,121 @@ export default function Quiz({ mode }: { mode?: "ez" | "md" | "hd" }) {
         </Title>
 
         <Card title={t("competition_info")} Icon={MdOutlineContentPasteSearch}>
-          <Group justify="space-between" align="center" w={"100%"} visibleFrom="md">
-            <TextInput readOnly flex={1} label={t("where")} value={comp?.location} />
-            <TextInput readOnly flex={1} label={t("duration")} value={comp?.date} />
-            <TextInput readOnly flex={1} label={t("part_number")} value={comp?.competitors.count} />
-          </Group>
-          <Stack w={"100%"} hiddenFrom="md">
+          <Stack w={"100%"}>
             <TextInput readOnly flex={1} label={t("where")} value={comp?.location} />
             <TextInput readOnly flex={1} label={t("duration")} value={comp?.date} />
             <TextInput readOnly flex={1} label={t("part_number")} value={comp?.competitors.count} />
           </Stack>
         </Card>
 
-        <Card title={t("podiums_comps")} Icon={FaMedal} key={attempts} animation={attempts > 0 ? "new-clue" : undefined}>
-          <Group justify="space-between" align="center" w={"100%"} visibleFrom="md">
-            <TableWithCols tableType="goldrush" items={comp?.podiums || []} context={tableContext} />
-            <MyList list={comp?.competitors.competitors.map((c) => c.name) || []} mah={300} condition={attempts > 1} />
-          </Group>
-          <Stack h={"600px"} w={"100%"} hiddenFrom="md">
+        <Card title={t("podiums_comps")} Icon={FaMedal} assignRef={assignRef([1, 2, 3])}>
+          <Stack h={"600px"} w={"100%"}>
             <TableWithCols
               tableType="goldrush"
-              items={comp?.podiums || []}
+              items={getOrderedEvents() || []}
               context={tableContext}
-              multipleConditions={[!gameOver, attempts < 0 && !gameOver, attempts < 2 && !gameOver]}
+              multipleConditions={[!gameOver, attempts < 0 && !gameOver, attempts < 3 && !gameOver]}
+              ref={tableRef}
             />
             <MyList list={comp?.competitors.competitors.map((c) => c.name) || []} mah={300} condition={attempts <= 1} />
           </Stack>
         </Card>
       </Stack>
     </Stack>
+
+    <Grid
+      columns={2}
+      visibleFrom="md"
+      flex={1}
+      styles={{
+        root: {
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+        },
+        inner: {
+          flexGrow: 1,
+        },
+        col: {
+          display: "flex",
+          flexDirection: "column",
+          padding: "20px 50px",
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      }}
+    >
+      <Grid.Col span={1}>
+        <Actions openInfo={goldrushModal} w={"70%"}>
+          <Group justify="space-between" align="center" w={"100%"}>
+            <Group justify="center" align="center" gap={5}>
+              <Text fw={600} fz={"1.2rem"}>
+                {t("gr_missing_winners")}
+              </Text>
+              <Text fw={600} fz={"1.2rem"}>
+                {(comp?.events?.length || 0) - guessedEvents.length}
+              </Text>
+            </Group>
+            <Group justify="start" align="center" gap={5}>
+              <Text fw={600} fz={"1.2rem"}>
+                {t("time")}:{" "}
+              </Text>
+              <Text
+                fw={600}
+                fz={"1.2rem"}
+                c={timer === 0 ? "red" : "white"}
+                className={timer <= 10 && timer != 0 && !gameOver ? "timer-blinking" : undefined}
+              >
+                {formatSecondsTime(timer)}
+              </Text>
+            </Group>
+          </Group>
+          <Button fullWidth disabled={gameOver} variant="light" onClick={() => confirmationModal(t("skip_answ_modal_desc"), skipAnswer)}>
+            {t("skip")}
+          </Button>
+          <Button
+            fullWidth
+            disabled={gameOver}
+            variant="outline"
+            onClick={() => confirmationModal(t("reveal_answ_modal_desc"), revealAnswer)}
+          >
+            {t("reveal")}
+          </Button>
+          <Button fullWidth disabled={!gameOver} onClick={() => confirmationModal(t("start_new_modal_desc"), startNew)}>
+            {t("start_new")}
+          </Button>
+        </Actions>
+      </Grid.Col>
+      <Grid.Col span={1}>
+        <Stack flex={1} align="center" justify="center" w={"100%"}>
+          <Title order={1} ta={"center"}>
+            {comp?.name}
+          </Title>
+
+          <Card title={t("competition_info")} Icon={MdOutlineContentPasteSearch}>
+            <Group justify="space-between" align="center" w={"100%"}>
+              <TextInput readOnly flex={1} label={t("where")} value={comp?.location} />
+              <TextInput readOnly flex={1} label={t("duration")} value={comp?.date} />
+              <TextInput readOnly flex={1} label={t("part_number")} value={comp?.competitors.count} />
+            </Group>
+          </Card>
+
+          <Card title={t("podiums_comps")} Icon={FaMedal} assignRef={assignRef([1, 2, 3])}>
+            <Group justify="space-between" align="center" w={"100%"} h={"400px"}>
+              <TableWithCols
+                tableType="goldrush"
+                items={getOrderedEvents() || []}
+                context={tableContext}
+                multipleConditions={[!gameOver, attempts < 0 && !gameOver, attempts < 3 && !gameOver]}
+                ref={tableRef}
+              />
+              <MyList list={comp?.competitors.competitors.map((c) => c.name) || []} mah={400} condition={attempts <= 1} w={"25%"} />
+            </Group>
+          </Card>
+        </Stack>
+      </Grid.Col>
+    </Grid>
+    </>
   );
 }
