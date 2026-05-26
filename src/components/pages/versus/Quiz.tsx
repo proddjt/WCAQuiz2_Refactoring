@@ -11,7 +11,6 @@ import MyLoader from "@/components/layout/MyLoader";
 import { formatTime } from "@/utils/functions";
 import { eventMap } from "@/data/eventMap";
 import useScreen from "@/context/Screen/useScreen";
-// import ReactCountryFlag from "react-country-flag";
 
 export default function Quiz(){
     const searchParams = useSearchParams();
@@ -48,7 +47,6 @@ export default function Quiz(){
                 onClick={() => !gameOver && isCensored && checkAnswer(persons[0]?.result, persons[1]?.result)}
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
-                // flag={<ReactCountryFlag svg countryCode={persons[0]?.country_iso}/>}
                 />
                 <Divider orientation="horizontal" size="md" c={"lime"}/>
                 <ProfileCard
@@ -65,7 +63,6 @@ export default function Quiz(){
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
                 isCensored={isCensored}
-                // flag={<ReactCountryFlag svg countryCode={persons[1]?.country_iso}/>}
                 />
             </Stack>
             <Group flex={1} justify="center" align="center" gap={200} visibleFrom="md">
@@ -82,7 +79,6 @@ export default function Quiz(){
                 onClick={() => !gameOver && isCensored && checkAnswer(persons[0]?.result, persons[1]?.result)}
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
-                // flag={<ReactCountryFlag svg countryCode={persons[0]?.country_iso}/>}
                 />
                 <Divider orientation="vertical" size="xs" color={"lime"}/>
                 <ProfileCard
@@ -99,7 +95,6 @@ export default function Quiz(){
                 eventName={eventMap.get(event!) || "3x3x3 Cube"}
                 eventIcon={<span className={`cubing-icon event-${event}`}></span>}
                 isCensored={isCensored}
-                // flag={<ReactCountryFlag svg countryCode={persons[1]?.country_iso}/>}
                 />
             </Group>
         </Stack>

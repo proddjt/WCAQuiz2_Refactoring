@@ -8,8 +8,6 @@ export type VersusPerson = {
     result: number,
     has_avatar: boolean,
     avatarUrl: string,
-    country_name: string,
-    country_iso: string,
 }
 
 export const getPerson = async ({mode, event, result, actualId, previousId}: {mode: string, event: string, result: string, actualId?: string, previousId?: string}): Promise<{person: VersusPerson | null, error: boolean}> => {
@@ -39,8 +37,6 @@ export const getPerson = async ({mode, event, result, actualId, previousId}: {mo
             result: personData.personal_records[event][result].best,
             has_avatar: !personData.person.avatar.is_default,
             avatarUrl: personData.person.avatar.url,
-            country_name: personData.person.country.name,
-            country_iso: personData.person.country.iso2,
         }
         check = true;
     }
