@@ -1,7 +1,7 @@
 import { AgGridReact } from "ag-grid-react";
 import { AG_GRID_LOCALE_IT } from "@ag-grid-community/locale";
 
-import { colorSchemeDark, themeQuartz, type ColDef, type RowClickedEvent, type SelectionChangedEvent } from "ag-grid-community";
+import { colorSchemeDark, GridOptions, themeQuartz, type ColDef, type RowClickedEvent, type SelectionChangedEvent } from "ag-grid-community";
 import { useMemo, type RefObject } from "react";
 
 interface Props {

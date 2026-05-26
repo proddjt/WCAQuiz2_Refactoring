@@ -19,11 +19,11 @@ export const getPerson = async ({mode, event, result, actualId, previousId}: {mo
     let count = 0
     while (!check && count < 10) {
         count += 1
-        const [pageErr, pages] = await safe(`${unofficialUrl}/rank/${mode}/single/333.json`)
+        const [pageErr, pages] = await safe(`${unofficialUrl}/rank/${mode}/single/${event}.json`)
         if (pageErr || !pages || pages.total === 0) continue
 
         const totalPages = Math.ceil(pages.total / pages.pagination.size);
-        const [listErr, list] = await safe(`${unofficialUrl}/rank/${mode}/single/333.json?page=${Math.floor(Math.random() * totalPages) + 1}`);
+        const [listErr, list] = await safe(`${unofficialUrl}/rank/${mode}/single/${event}.json?page=${Math.floor(Math.random() * totalPages) + 1}`);
         if (listErr || !list || !list.items || list.items.length === 0) continue
 
         const id = list.items[Math.floor(Math.random()*list.items.length)].personId;
