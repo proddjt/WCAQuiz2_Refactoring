@@ -18,5 +18,6 @@ export const eventMap = new Map([
     ['333mbf', '3x3x3 Multi-Blind'],
     ['333ft', '3x3x3 With Feet'],
     ['magic', "Magic"],
-    ['mmagic', "Master Magic"]
+    ['mmagic', "Master Magic"],
+    ['333mbo', '3x3x3 Multi-Blind Old Style']
 ])

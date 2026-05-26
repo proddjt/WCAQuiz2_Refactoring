@@ -38,7 +38,7 @@ export default function useReveal(mode: string, difficulty: string) {
     if (answer === person?.id) {
       setGameOver(true);
       stop();
-      endModal(t("win_modal_title"), t("win_modal_desc", { person: person?.name, points: 5 - attempts }));
+      endModal(t("win_modal_title"), t("win_modal_desc", { person: person?.name, points: 10 - attempts }));
     } else {
       scrollToSection(attempts + 1);
       setAttempts(attempts + 1);
