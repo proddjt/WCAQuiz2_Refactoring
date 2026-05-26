@@ -35,8 +35,8 @@ export const getPerson = async ({mode, event, result, actualId, previousId}: {mo
             id: personData.person.id,
             name: personData.person.name,
             result: personData.personal_records[event][result].best,
-            has_avatar: !personData.person.avatar.is_default,
-            avatarUrl: personData.person.avatar.url,
+            has_avatar: !personData.person.avatar?.is_default,
+            avatarUrl: personData.person.avatar?.url,
         }
         check = true;
     }

@@ -55,20 +55,20 @@ export default function Quiz({ mode }: { mode: string }) {
         <Actions openInfo={focusModal} isFloating={true}>
           <Group justify="space-between" align="center" w={"100%"}>
             <Group justify="start" align="center" gap={5}>
-              <Text fw={600} fz={"1.5rem"}>
+              <Text fw={600} fz={"1.2rem"}>
                 {t("score")}:
               </Text>
-              <Text fw={600} fz={"1.5rem"} c={attempts < 2 ? "green" : attempts < 4 ? "yellow" : "red"}>
+              <Text fw={600} fz={"1.2rem"} c={attempts < 2 ? "green" : attempts < 4 ? "yellow" : "red"}>
                 {5 - attempts}
               </Text>
             </Group>
             <Group justify="start" align="center" gap={5}>
-              <Text fw={600} fz={"1.5rem"}>
+              <Text fw={600} fz={"1.2rem"}>
                 {t("time")}:{" "}
               </Text>
               <Text
                 fw={600}
-                fz={"1.5rem"}
+                fz={"1.2rem"}
                 c={isTimeOver ? "red" : "white"}
                 className={timer <= 10 && timer != 0 && !gameOver ? "timer-blinking" : undefined}
               >
